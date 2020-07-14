@@ -11,7 +11,7 @@
     <name>primefaces-integration-tests</name>
 
     <properties>
-        <webdriver.firefoxDriverBinary>D:/geckodriver.exe</webdriver.firefoxDriverBinary>
+        <webdriver.firefoxDriverBinary>geckodriver</webdriver.firefoxDriverBinary>
         <!-- build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.min.version>1.8</java.min.version>
@@ -150,5 +150,19 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>windows-webdriver-binary</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <webdriver.firefoxDriverBinary>geckodriver.exe</webdriver.firefoxDriverBinary>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

@@ -6,6 +6,16 @@ PrimeFaces Integration Tests
 
 To provide an integration and regression test suite for PrimeFaces.
 
+### Prerequisites
+
+This project uses [selenium webdriver](https://www.selenium.dev/) for web browser automation.  Currently, a native
+installation of [Firefox](https://firefox.com/) is required, along with the
+[selenium gecko webdriver](https://github.com/mozilla/geckodriver) binary.
+
 ### Build & Run
 - Build by source `mvn clean package`
 - Run "integration tests" `mvn verify`
+
+Note: By default, the webdriver binary is loaded from the base directory of the project with an assumed file name of
+      "geckodriver" for Linux/MacOS and geckdriver.exe for Windows.  A non-default path can be specified via a system
+      property: `mvn verify -Dwebdriver.firefoxDriverBinary=$HOME/.selenium/drivers/firefox/geckdriver` 
