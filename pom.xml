@@ -11,15 +11,19 @@
     <name>primefaces-integration-tests</name>
 
     <properties>
+        <webdriver.firefoxDriverBinary>D:/geckodriver.exe</webdriver.firefoxDriverBinary>
+        <!-- build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.min.version>1.8</java.min.version>
+        <!-- dependency versions -->
         <primefaces.version>8.0</primefaces.version>
         <primefaces-selenium.version>8.0.0</primefaces-selenium.version>
         <myfaces.version>2.3.6</myfaces.version>
         <junit.version>5.5.2</junit.version>
         <tomee.version>8.0.3</tomee.version>
-        <webdriver.firefoxDriverBinary>D:/geckodriver.exe</webdriver.firefoxDriverBinary>
-
+        <!-- plugin versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     </properties>
 
@@ -97,8 +101,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.min.version}</source>
+                    <target>${java.min.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
@@ -112,9 +116,33 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>**/*IT</include>
+                    </includes>
+                    <systemPropertyVariables>
+                        <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <excludes>
+                        <exclude>**/*IT</exclude>
+                    </excludes>
                     <systemPropertyVariables>
                         <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
                     </systemPropertyVariables>

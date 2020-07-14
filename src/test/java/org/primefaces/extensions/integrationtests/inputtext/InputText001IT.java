@@ -23,7 +23,7 @@ import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 
-public class InputText001Test extends AbstractPrimePageTest
+public class InputText001IT extends AbstractPrimePageTest
 {
     @Test
     public void test(Page page) throws InterruptedException

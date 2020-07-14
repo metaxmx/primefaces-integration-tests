@@ -7,5 +7,5 @@ PrimeFaces Integration Tests
 To provide an integration and regression test suite for PrimeFaces.
 
 ### Build & Run
-- Build by source `mvn clean package -DskipTests`
-- Run "integration tests" `mvn test`
+- Build by source `mvn clean package`
+- Run "integration tests" `mvn verify`
