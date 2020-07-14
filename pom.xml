@@ -12,20 +12,27 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <primefaces.version>8.0</primefaces.version>
+        <primefaces-selenium.version>8.0.0</primefaces-selenium.version>
+        <myfaces.version>2.3.6</myfaces.version>
+        <junit.version>5.5.2</junit.version>
+        <tomee.version>8.0.3</tomee.version>
     </properties>
 
     <dependencies>
+        <!-- COMPILE -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>8.0</version>
+            <version>${primefaces.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.0</version>
+            <version>1.18.12</version>
         </dependency>
 
+        <!-- PROVIDED -->
         <dependency>
             <groupId>org.apache.tomee</groupId>
             <artifactId>javaee-api</artifactId>
@@ -35,45 +42,45 @@
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-api</artifactId>
-            <version>2.3.6</version>
+            <version>${myfaces.version}</version>
             <scope>provided</scope>
         </dependency>
 
-
+        <!-- TEST -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>5.5.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomee</groupId>
             <artifactId>tomee-embedded</artifactId>
-            <version>8.0.3</version>
+            <version>${tomee.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomee</groupId>
             <artifactId>tomee-myfaces</artifactId>
-            <version>8.0.3</version>
+            <version>${tomee.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-selenium-core</artifactId>
-            <version>8.0.0</version>
+            <version>${primefaces-selenium.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-selenium-components</artifactId>
-            <version>8.0.0</version>
+            <version>${primefaces-selenium.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -94,7 +101,7 @@
             <plugin>
                 <groupId>org.apache.tomee.maven</groupId>
                 <artifactId>tomee-embedded-maven-plugin</artifactId>
-                <version>8.0.3</version>
+                <version>${tomee.version}</version>
                 <configuration>
                     <context>ROOT</context>
                 </configuration>
