@@ -36,8 +36,6 @@ public class PrimeFacesSeleniumAdapterImpl implements PrimeSeleniumAdapter
     @Override
     public WebDriver createWebDriver()
     {
-        System.setProperty("webdriver.gecko.driver", "D:/geckodriver.exe");
-
         FirefoxOptions options = new FirefoxOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 

@@ -17,6 +17,7 @@
         <myfaces.version>2.3.6</myfaces.version>
         <junit.version>5.5.2</junit.version>
         <tomee.version>8.0.3</tomee.version>
+        <webdriver.firefoxDriverBinary>D:/geckodriver.exe</webdriver.firefoxDriverBinary>
     </properties>
 
     <dependencies>
@@ -117,6 +118,11 @@
                         <version>1.2.0</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <systemPropertyVariables>
+                        <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>
