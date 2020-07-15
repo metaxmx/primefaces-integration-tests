@@ -129,7 +129,7 @@
                 </executions>
                 <configuration>
                     <includes>
-                        <include>**/*IT</include>
+                        <include>**/*Test</include>
                     </includes>
                     <systemPropertyVariables>
                         <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
@@ -142,13 +142,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <excludes>
-                        <exclude>**/*IT</exclude>
-                    </excludes>
-                    <systemPropertyVariables>
-                        <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
-                        <webdriver.headless>${webdriver.headless}</webdriver.headless>
-                    </systemPropertyVariables>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
