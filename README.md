@@ -15,7 +15,12 @@ installation of [Firefox](https://firefox.com/) is required, along with the
 ### Build & Run
 - Build by source `mvn clean package`
 - Run "integration tests" `mvn verify`
-
-Note: By default, the webdriver binary is loaded from the base directory of the project with an assumed file name of
+  - By default, the webdriver binary is loaded from the base directory of the project with an assumed file name of
       "geckodriver" for Linux/MacOS and geckdriver.exe for Windows.  A non-default path can be specified via a system
-      property: `mvn verify -Dwebdriver.firefoxDriverBinary=$HOME/.selenium/drivers/firefox/geckdriver` 
+      property:
+
+      ```mvn verify -Dwebdriver.firefoxDriverBinary=$HOME/.selenium/drivers/firefox/geckdriver```
+  - By default, the tests will be run in a visible browser, but can be run in headless mode by activating the
+  headless-mode profile:
+
+      ```mvn verify -Pheadless-mode```  
