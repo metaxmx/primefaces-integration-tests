@@ -33,12 +33,20 @@ public class PrimeFacesSeleniumAdapterImpl implements PrimeSeleniumAdapter
 {
     private Container container;
 
+    private static final String HEADLESS_MODE_SYSPROP_NAME = "webdriver.headless";
+
+    private static final String HEADLESS_MODE_SYSPROP_VAL_DEFAULT = "false";
+
     @Override
     public WebDriver createWebDriver()
     {
         FirefoxOptions options = new FirefoxOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-
+        options.setHeadless(
+                Boolean.parseBoolean(
+                        System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
+                )
+        );
         return new FirefoxDriver(options);
     }
 
