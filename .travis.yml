@@ -1,0 +1,21 @@
+language: java
+dist: xenial
+sudo: false
+
+jdk:
+  - openjdk8
+  - openjdk11
+
+before_install:
+  - sudo apt-get -y install chromium-chromedriver firefox-geckodriver
+
+script:
+  - ln -s /usr/bin/chromedriver chromedriver && ln -s /usr/bin/geckodriver geckodriver
+  - mvn -B -V clean install -Pheadless-mode
+
+addons:
+  apt:
+    update: true
+cache:
+  directories:
+    - "$HOME/.m2/repository"
