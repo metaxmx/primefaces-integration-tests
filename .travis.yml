@@ -6,12 +6,17 @@ jdk:
   - openjdk8
   - openjdk11
 
+env:
+  - PROFILES=headless-mode
+  - PROFILES=headless-mode,chrome
+
 before_install:
-  - sudo apt-get -y install chromium-chromedriver firefox-geckodriver
+  - sudo apt-get -y install firefox-geckodriver
 
 script:
-  - ln -s /usr/bin/chromedriver chromedriver && ln -s /usr/bin/geckodriver geckodriver
-  - mvn -B -V clean install -Pheadless-mode
+  - ln -s /usr/bin/geckodriver geckodriver
+  - source .travis/install-chromedriver.sh
+  - mvn -B -V clean install -P${PROFILES}
 
 addons:
   apt:

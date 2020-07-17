@@ -17,10 +17,7 @@ package org.primefaces.extensions.integrationtests;
 
 import org.apache.tomee.embedded.Configuration;
 import org.apache.tomee.embedded.Container;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.primefaces.extensions.selenium.spi.PrimeSeleniumAdapter;
 
 import java.io.File;
@@ -29,26 +26,17 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.Random;
 
-public class PrimeFacesSeleniumAdapterImpl implements PrimeSeleniumAdapter
+public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAdapter
 {
+
+    protected static final String HEADLESS_MODE_SYSPROP_NAME = "webdriver.headless";
+
+    protected static final String HEADLESS_MODE_SYSPROP_VAL_DEFAULT = "false";
+
     private Container container;
 
-    private static final String HEADLESS_MODE_SYSPROP_NAME = "webdriver.headless";
-
-    private static final String HEADLESS_MODE_SYSPROP_VAL_DEFAULT = "false";
-
     @Override
-    public WebDriver createWebDriver()
-    {
-        FirefoxOptions options = new FirefoxOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        options.setHeadless(
-                Boolean.parseBoolean(
-                        System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
-                )
-        );
-        return new FirefoxDriver(options);
-    }
+    public abstract WebDriver createWebDriver();
 
     @Override
     public void startup() throws Exception
@@ -112,4 +100,5 @@ public class PrimeFacesSeleniumAdapterImpl implements PrimeSeleniumAdapter
     {
         return container;
     }
+
 }

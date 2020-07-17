@@ -11,6 +11,8 @@
     <name>primefaces-integration-tests</name>
 
     <properties>
+        <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEFirefoxAdapterImpl</primefaces-selenium.adapter>
+        <webdriver.chromeDriverBinary>chromedriver</webdriver.chromeDriverBinary>
         <webdriver.firefoxDriverBinary>geckodriver</webdriver.firefoxDriverBinary>
         <webdriver.headless>false</webdriver.headless>
         <!-- build configuration -->
@@ -96,6 +98,15 @@
 
     <build>
         <finalName>primefaces-integration-tests</finalName>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources-filtered</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -132,6 +143,7 @@
                         <include>**/*Test</include>
                     </includes>
                     <systemPropertyVariables>
+                        <webdriver.chrome.driver>${webdriver.chromeDriverBinary}</webdriver.chrome.driver>
                         <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
                         <webdriver.headless>${webdriver.headless}</webdriver.headless>
                     </systemPropertyVariables>
@@ -156,6 +168,13 @@
                 <webdriver.headless>true</webdriver.headless>
             </properties>
         </profile>
+        <!-- Test with chrome instead of firefox -->
+        <profile>
+            <id>chrome</id>
+            <properties>
+                <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEChromeAdapterImpl</primefaces-selenium.adapter>
+            </properties>
+        </profile>
         <!-- Detect windows and set properties accordingly -->
         <profile>
             <id>windows-webdriver-binary</id>
@@ -165,6 +184,7 @@
                 </os>
             </activation>
             <properties>
+                <webdriver.chromeDriverBinary>chromedriver.exe</webdriver.chromeDriverBinary>
                 <webdriver.firefoxDriverBinary>geckodriver.exe</webdriver.firefoxDriverBinary>
             </properties>
         </profile>
