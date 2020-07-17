@@ -1,4 +1,5 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Build Status](https://travis-ci.org/primefaces-extensions/primefaces-integration-tests.svg?branch=master)](https://travis-ci.org/primefaces-extensions/primefaces-integration-tests)
 [![Stackoverflow](https://img.shields.io/badge/StackOverflow-primefaces-chocolate.svg)](https://stackoverflow.com/questions/tagged/primefaces-extensions)
 
 PrimeFaces Integration Tests
