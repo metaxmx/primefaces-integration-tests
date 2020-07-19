@@ -12,11 +12,9 @@
         <h:body>
 
             <h:form id="form">
-                <p:datePicker id="datepicker1" value="#{datePicker001.localDate}" pattern="MM/dd/yyyy">
-                    <p:ajax process="@this" />
-                </p:datePicker>
+                <p:datePicker id="datepicker1" value="#{datePicker001.localDate}" pattern="MM/dd/yyyy" />
 
-                <p:commandButton id="button" update="@form" />
+                <p:commandButton id="button" value="Submit" update="@form" />
             </h:form>
 
         </h:body>

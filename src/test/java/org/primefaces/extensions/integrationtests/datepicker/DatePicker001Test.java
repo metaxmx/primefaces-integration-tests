@@ -17,6 +17,9 @@ package org.primefaces.extensions.integrationtests.datepicker;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -34,10 +37,19 @@ public class DatePicker001Test extends AbstractPrimePageTest
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         Assertions.assertEquals(LocalDate.now().format(dateTimeFormatter), page.datePicker.getValue());
 
-        //TODO: set focus to datePicker, check widget-overlay, ...
+        //TODO: we need to move "things" to PF-Selenium
         page.datePicker.setValue("02/19/1978");
-        page.button.click();
+        WebElement eltInput = page.getWebDriver().findElement(By.id("form:datepicker1_input"));
+        WebElement eltPanel = page.getWebDriver().findElement(By.id("form:datepicker1_panel"));
 
+        //set focus to input
+        new Actions(page.getWebDriver()).moveToElement(eltInput).click().perform();
+        //check DatePicker-widget
+        Assertions.assertNotNull(eltPanel);
+        Assertions.assertTrue(eltPanel.getText().contains("1978"));
+        Assertions.assertTrue(eltPanel.getText().contains("February"));
+
+        page.button.click();
         Assertions.assertEquals("02/19/1978", page.datePicker.getValue());
     }
 
