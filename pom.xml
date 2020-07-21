@@ -8,7 +8,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>primefaces-integration-tests</name>
+    <name>PrimeFaces Integration Tests</name>
+    <description>
+        <![CDATA[PrimeFaces regression test suite using Selenium.]]>
+    </description>
 
     <properties>
         <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEFirefoxAdapterImpl</primefaces-selenium.adapter>
