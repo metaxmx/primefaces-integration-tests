@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,14 +28,13 @@ public class PrimeFacesSeleniumTomEEFirefoxAdapterImpl extends PrimeFacesSeleniu
     private static final String HEADLESS_MODE_SYSPROP_VAL_DEFAULT = "false";
 
     @Override
-    public WebDriver createWebDriver()
-    {
+    public WebDriver createWebDriver() {
         FirefoxOptions options = new FirefoxOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         options.setHeadless(
-                Boolean.parseBoolean(
-                        System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
-                )
+                    Boolean.parseBoolean(
+                                System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
+                    )
         );
         return new FirefoxDriver(options);
     }

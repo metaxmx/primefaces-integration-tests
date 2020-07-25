@@ -13,28 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.integrationtests.datepicker;
+package org.primefaces.extensions.integrationtests.inputmask;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 
-import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+public abstract class AbstractInputMaskTest extends AbstractPrimePageTest {
 
-import lombok.Data;
+    // TODO: PF9 this is renamed to "clearMaskOnLostFocus"
+    public static final String AUTO_CLEAR = "autoclear";
 
-@Named
-@ViewScoped
-@Data
-public class DatePicker001 implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+    // TODO: PF9 ? must be [] so "(999) 999-9999[ x99999]"
+    public static final String OPTIONAL_MASK = "(999) 999-9999? x99999";
 
-    private LocalDate localDate;
-
-    @PostConstruct
-    public void init() {
-        localDate = LocalDate.now();
-    }
 }

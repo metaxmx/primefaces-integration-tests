@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.integrationtests.inputtext;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
@@ -23,21 +24,27 @@ import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 
-public class InputText001Test extends AbstractPrimePageTest
-{
+public class InputText001Test extends AbstractPrimePageTest {
+
     @Test
-    public void test(Page page) throws InterruptedException
-    {
-        Assertions.assertEquals("byebye!", page.inputtext.getValue());
-        
-        page.inputtext.setValue("hello!");
+    public void test(Page page) throws InterruptedException {
+        InputText inputText = page.inputtext;
+        Assertions.assertEquals("byebye!", inputText.getValue());
+
+        inputText.setValue("hello!");
         page.button.click();
 
-        Assertions.assertEquals("hello!", page.inputtext.getValue());
+        Assertions.assertEquals("hello!", inputText.getValue());
+        assertConfiguration(inputText.getWidgetConfiguration());
     }
 
-    public static class Page extends AbstractPrimePage
-    {
+    private void assertConfiguration(JSONObject cfg) {
+        System.out.println("InputText Config = " + cfg);
+        // TODO: in PF9 this should be changed to assertFalse
+        Assertions.assertTrue(cfg.has("maxlength"));
+    }
+
+    public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:inputtext")
         InputText inputtext;
 
@@ -45,8 +52,7 @@ public class InputText001Test extends AbstractPrimePageTest
         CommandButton button;
 
         @Override
-        public String getLocation()
-        {
+        public String getLocation() {
             return "inputtext/inputText001.xhtml";
         }
     }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,18 +21,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.primefaces.extensions.selenium.spi.PrimeSeleniumAdapter;
 
-
 public class PrimeFacesSeleniumTomEEChromeAdapterImpl extends PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAdapter {
 
     @Override
-    public WebDriver createWebDriver()
-    {
+    public WebDriver createWebDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         chromeOptions.setHeadless(
-                Boolean.parseBoolean(
-                        System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
-                )
+                    Boolean.parseBoolean(
+                                System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
+                    )
         );
         return new ChromeDriver(chromeOptions);
     }

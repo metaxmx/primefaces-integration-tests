@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,19 +15,18 @@
  */
 package org.primefaces.extensions.integrationtests;
 
-import org.apache.tomee.embedded.Configuration;
-import org.apache.tomee.embedded.Container;
-import org.openqa.selenium.WebDriver;
-import org.primefaces.extensions.selenium.spi.PrimeSeleniumAdapter;
-
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
 import java.util.Random;
 
-public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAdapter
-{
+import org.apache.tomee.embedded.Configuration;
+import org.apache.tomee.embedded.Container;
+import org.openqa.selenium.WebDriver;
+import org.primefaces.extensions.selenium.spi.PrimeSeleniumAdapter;
+
+public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAdapter {
 
     protected static final String HEADLESS_MODE_SYSPROP_NAME = "webdriver.headless";
 
@@ -39,8 +38,7 @@ public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAda
     public abstract WebDriver createWebDriver();
 
     @Override
-    public void startup() throws Exception
-    {
+    public void startup() throws Exception {
         Configuration config = new Configuration();
         config.setHttpPort(createRandomPort());
         config.setQuickSession(true);
@@ -54,8 +52,7 @@ public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAda
 
         File targetDir = new File("target/");
         String[] warFiles = targetDir.list((dir, name) -> name.endsWith(".war"));
-        if (warFiles == null || warFiles.length == 0)
-        {
+        if (warFiles == null || warFiles.length == 0) {
             throw new RuntimeException("No WAR found in target; please build before ;)");
         }
         String warName = warFiles[0];
@@ -63,9 +60,9 @@ public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAda
 
         container = new Container(config);
         container.deploy(
-            "ROOT",
-            warFile,
-            true);
+                    "ROOT",
+                    warFile,
+                    true);
 
         Thread.sleep(1000);
 
@@ -79,25 +76,21 @@ public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAda
     }
 
     @Override
-    public String getBaseUrl()
-    {
+    public String getBaseUrl() {
         return "http://localhost:" + container.getConfiguration().getHttpPort() + "/";
     }
 
     @Override
-    public void shutdown() throws Exception
-    {
+    public void shutdown() {
         container.close();
     }
 
-    private int createRandomPort()
-    {
+    private int createRandomPort() {
         Random random = new Random();
         return random.nextInt((9000 - 8000) + 1) + 8000;
     }
 
-    public Container getContainer()
-    {
+    public Container getContainer() {
         return container;
     }
 
