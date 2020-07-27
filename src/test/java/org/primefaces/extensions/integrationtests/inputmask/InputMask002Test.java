@@ -62,6 +62,7 @@ public class InputMask002Test extends AbstractInputMaskTest {
     }
 
     private void assertConfiguration(JSONObject cfg) {
+        assertNoJavascriptErrors();
         System.out.println("InputMask Config = " + cfg);
         Assertions.assertEquals("999-99-9999", cfg.getString("mask"));
         Assertions.assertEquals("*", cfg.getString("placeholder"));

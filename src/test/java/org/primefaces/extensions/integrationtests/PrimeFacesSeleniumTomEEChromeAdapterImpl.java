@@ -15,10 +15,14 @@
  */
 package org.primefaces.extensions.integrationtests;
 
+import java.util.logging.Level;
+
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.primefaces.extensions.selenium.spi.PrimeSeleniumAdapter;
 
 public class PrimeFacesSeleniumTomEEChromeAdapterImpl extends PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAdapter {
@@ -32,6 +36,10 @@ public class PrimeFacesSeleniumTomEEChromeAdapterImpl extends PrimeFacesSelenium
                                 System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
                     )
         );
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.ALL);
+        chromeOptions.setCapability("goog:loggingPrefs", logPrefs);
+        chromeOptions.setExperimentalOption("w3c", false);
         return new ChromeDriver(chromeOptions);
     }
 

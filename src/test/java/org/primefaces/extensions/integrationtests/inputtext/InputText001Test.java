@@ -39,6 +39,7 @@ public class InputText001Test extends AbstractPrimePageTest {
     }
 
     private void assertConfiguration(JSONObject cfg) {
+        assertNoJavascriptErrors();
         System.out.println("InputText Config = " + cfg);
         // TODO: in PF9 this should be changed to assertFalse
         Assertions.assertTrue(cfg.has("maxlength"));

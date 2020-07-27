@@ -15,8 +15,8 @@
  */
 package org.primefaces.extensions.integrationtests.datepicker;
 
-import org.apache.openejb.jee.Web;
-import org.json.JSONObject;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -26,10 +26,6 @@ import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class DatePicker002Test extends AbstractPrimePageTest {
 
@@ -41,7 +37,8 @@ public class DatePicker002Test extends AbstractPrimePageTest {
         // Act
         datePicker.click(); // focus to bring up panel
 
-        // Assert Panel
+        // Assert
+        assertNoJavascriptErrors();
         WebElement panel = datePicker.getPanel();
         Assertions.assertNotNull(panel);
         List<WebElement> elements = panel.findElements(By.cssSelector("table.ui-datepicker-calendar"));
@@ -67,7 +64,8 @@ public class DatePicker002Test extends AbstractPrimePageTest {
         // Act
         datePicker.click(); // focus to bring up panel
 
-        // Assert Panel
+        // Assert
+        assertNoJavascriptErrors();
         WebElement panel = datePicker.getPanel();
         Assertions.assertNotNull(panel);
         List<WebElement> elements = panel.findElements(By.cssSelector("table.ui-datepicker-calendar"));

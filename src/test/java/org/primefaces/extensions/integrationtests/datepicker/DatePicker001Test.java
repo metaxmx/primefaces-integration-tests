@@ -57,6 +57,7 @@ public class DatePicker001Test extends AbstractPrimePageTest {
     }
 
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
+        assertNoJavascriptErrors();
         System.out.println("DatePicker Config = " + cfg);
         Assertions.assertEquals("mm/dd/yy", cfg.getString("dateFormat"));
         Assertions.assertEquals(defaultDate, cfg.getString("defaultDate"));
