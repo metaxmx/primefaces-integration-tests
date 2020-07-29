@@ -17,47 +17,75 @@ package org.primefaces.extensions.integrationtests.inputtext;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 
-public class InputText001Test extends AbstractPrimePageTest {
+public class InputText003Test extends AbstractPrimePageTest {
 
     @Test
-    public void test(Page page) {
+    @Order(1)
+    @DisplayName("InputText: MaxLength using less than max # of characters")
+    public void testMaxLengthLessThan(Page page) {
         // Arrange
         InputText inputText = page.inputtext;
-        Assertions.assertEquals("byebye!", inputText.getValue());
+        Assertions.assertEquals("", inputText.getValue());
 
         // Act
-        inputText.setValue("hello!");
+        inputText.setValue("four");
         page.button.click();
 
         // Assert
-        Assertions.assertEquals("hello!", inputText.getValue());
+        Assertions.assertEquals("MaxLength Counter", inputText.getAssignedLabelText());
+        Assertions.assertEquals("four", inputText.getValue());
+        Assertions.assertEquals("6 characters remaining.", page.display.getText());
+        assertConfiguration(inputText.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("InputText: MaxLength using more than max # of characters")
+    public void testMaxLengthMoreThan(Page page) {
+        // Arrange
+        InputText inputText = page.inputtext;
+        Assertions.assertEquals("", inputText.getValue());
+
+        // Act
+        inputText.setValue("12345678901234");
+        page.button.click();
+
+        // Assert
+        Assertions.assertEquals("MaxLength Counter", inputText.getAssignedLabelText());
+        Assertions.assertEquals("1234567890", inputText.getValue());
+        Assertions.assertEquals("0 characters remaining.", page.display.getText());
         assertConfiguration(inputText.getWidgetConfiguration());
     }
 
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("InputText Config = " + cfg);
-        // TODO: in PF9 this should be changed to assertFalse
-        Assertions.assertTrue(cfg.has("maxlength"));
+        Assertions.assertEquals(10, cfg.getInt("maxlength"));
     }
 
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:inputtext")
         InputText inputtext;
 
+        @FindBy(id = "form:display")
+        WebElement display;
+
         @FindBy(id = "form:button")
         CommandButton button;
 
         @Override
         public String getLocation() {
-            return "inputtext/inputText001.xhtml";
+            return "inputtext/inputText003.xhtml";
         }
     }
 }

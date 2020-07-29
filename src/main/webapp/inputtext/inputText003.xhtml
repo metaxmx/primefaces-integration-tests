@@ -12,9 +12,10 @@
     <h:body>
 
         <h:form id="form">
-            <p:inputText id="inputtext" value="#{inputText001.value}">
-                <p:ajax process="@this"/>
-            </p:inputText>
+            <p:outputLabel for="@next" value="MaxLength Counter"/>
+            <p:inputText id="inputtext" value="#{inputText002.value}" counter="display" maxlength="10" counterTemplate="{0} characters remaining."/>
+            <br/>
+            <h:outputText id="display"/>
 
             <p:commandButton id="button" update="@form" value="Submit"/>
         </h:form>

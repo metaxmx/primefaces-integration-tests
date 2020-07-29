@@ -12,9 +12,15 @@
     <h:body>
 
         <h:form id="form">
-            <p:inputText id="inputtext" value="#{inputText001.value}">
-                <p:ajax process="@this"/>
-            </p:inputText>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+            <h3>Floating Label</h3>
+            <span class="ui-float-label">
+                <p:inputText id="inputtext" value="#{inputText002.value}" required="true" requiredMessage="InputText is required!"/>
+                <p:outputLabel for="@previous" value="FillMe"/>
+             </span>
 
             <p:commandButton id="button" update="@form" value="Submit"/>
         </h:form>

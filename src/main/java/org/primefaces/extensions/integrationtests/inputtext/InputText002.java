@@ -14,7 +14,6 @@ package org.primefaces.extensions.integrationtests.inputtext;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -23,14 +22,9 @@ import lombok.Data;
 @Named
 @ViewScoped
 @Data
-public class InputText001 implements Serializable {
+public class InputText002 implements Serializable {
 
     private static final long serialVersionUID = -7518459955779385834L;
     private String value;
-
-    @PostConstruct
-    public void init() {
-        value = "byebye!";
-    }
 
 }
