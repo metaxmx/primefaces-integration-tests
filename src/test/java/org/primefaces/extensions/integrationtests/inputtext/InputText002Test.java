@@ -45,8 +45,10 @@ public class InputText002Test extends AbstractPrimePageTest {
         assertNoJavascriptErrors();
         Assertions.assertEquals("FillMe*", inputText.getAssignedLabelText());
         Assertions.assertEquals("", inputText.getValue());
-        Assertions.assertEquals("ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-focus ui-state-hover",
-                    inputText.getAttribute("class"));
+        String styleClass = inputText.getAttribute("class");
+        Assertions.assertTrue(styleClass.startsWith("ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"));
+        Assertions.assertTrue(styleClass.contains("ui-state-focus"));
+        Assertions.assertTrue(styleClass.contains("ui-state-hover"));
         Assertions.assertEquals(0, messages.getAllMessages().size());
     }
 
@@ -65,8 +67,9 @@ public class InputText002Test extends AbstractPrimePageTest {
         assertNoJavascriptErrors();
         Assertions.assertEquals("FillMe*", inputText.getAssignedLabelText());
         Assertions.assertEquals("filled", inputText.getValue());
-        Assertions.assertEquals("ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-filled",
-                    inputText.getAttribute("class"));
+        String styleClass = inputText.getAttribute("class");
+        Assertions.assertTrue(styleClass.startsWith("ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"));
+        Assertions.assertTrue(styleClass.contains("ui-state-filled"));
         Assertions.assertEquals(0, messages.getAllMessages().size());
     }
 
