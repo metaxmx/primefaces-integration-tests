@@ -21,8 +21,8 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.Tab;
 import org.primefaces.extensions.selenium.component.TabView;
+import org.primefaces.extensions.selenium.component.model.Tab;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,29 +35,28 @@ public class TabView001Test extends AbstractPrimePageTest {
         TabView tabView = page.tabView;
 
         // Assert - part 1
-        Assertions.assertNotNull(tabView.getHeaders());
-        Assertions.assertEquals(tabView.getHeaders().size(), 3);
-        Assertions.assertEquals(tabView.getTabHeader(0), "Tab1");
-        Assertions.assertEquals(tabView.getActiveTabHeader(), "Tab1");
-
         List<Tab> tabs = tabView.getTabs();
+        Assertions.assertNotNull(tabs);
         Assertions.assertEquals(tabs.size(), 3);
         AtomicInteger cnt = new AtomicInteger(0);
         tabs.forEach(tab -> {
                     Assertions.assertNotNull(tab.getHeader());
                     Assertions.assertNotNull(tab.getContent());
-                    Assertions.assertEquals(tab.getIndex(), cnt.get());
-                    cnt.incrementAndGet();
+                    Assertions.assertEquals(tab.getIndex(), cnt.getAndIncrement());
                 });
         Assertions.assertEquals(tabView.getTabs().get(0).getTitle(), "Tab1");
         Assertions.assertEquals(tabView.getTabs().get(1).getTitle(), "Tab2");
+
+        Assertions.assertEquals(tabView.getActiveTab().getIndex(), 0);
+        Assertions.assertEquals(tabView.getActiveTab().getTitle(), "Tab1");
 
         // Act
         tabView.toggleTab(2);
 
         // Assert - part 2
         assertNoJavascriptErrors();
-        Assertions.assertEquals(tabView.getActiveTabHeader(), "Tab3");
+        Assertions.assertEquals(tabView.getActiveTab().getIndex(), 2);
+        Assertions.assertEquals(tabView.getActiveTab().getTitle(), "Tab3");
     }
 
     public static class Page extends AbstractPrimePage {
