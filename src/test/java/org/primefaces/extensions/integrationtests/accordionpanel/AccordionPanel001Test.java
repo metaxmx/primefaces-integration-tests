@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.integrationtests.tabview;
+package org.primefaces.extensions.integrationtests.accordionpanel;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.component.AccordionPanel;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.TabView;
 import org.primefaces.extensions.selenium.component.model.Tab;
@@ -27,15 +28,15 @@ import org.primefaces.extensions.selenium.component.model.Tab;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TabView001Test extends AbstractPrimePageTest {
+public class AccordionPanel001Test extends AbstractPrimePageTest {
 
     @Test
     public void test(Page page) {
         // Arrange
-        TabView tabView = page.tabView;
+        AccordionPanel accordionPanel = page.accordionPanel;
 
         // Assert - part 1
-        List<Tab> tabs = tabView.getTabs();
+        List<Tab> tabs = accordionPanel.getTabs();
         Assertions.assertNotNull(tabs);
         Assertions.assertEquals(tabs.size(), 3);
         AtomicInteger cnt = new AtomicInteger(0);
@@ -44,31 +45,35 @@ public class TabView001Test extends AbstractPrimePageTest {
                     Assertions.assertNotNull(tab.getContent());
                     Assertions.assertEquals(tab.getIndex(), cnt.getAndIncrement());
                 });
-        Assertions.assertEquals(tabs.get(0).getTitle(), "Tab1");
-        Assertions.assertEquals(tabs.get(1).getTitle(), "Tab2");
+        Assertions.assertEquals(tabs.get(0).getTitle(), "Panel1");
+        Assertions.assertEquals(tabs.get(1).getTitle(), "Panel2");
 
-        Assertions.assertEquals(tabView.getSelectedTab().getIndex(), 0);
-        Assertions.assertEquals(tabView.getSelectedTab().getTitle(), "Tab1");
+        Assertions.assertNotNull(accordionPanel.getSelectedTabs());
+        Assertions.assertEquals(accordionPanel.getSelectedTabs().size(), 1);
+        Assertions.assertEquals(accordionPanel.getSelectedTabs().get(0).getIndex(), 0);
+        Assertions.assertEquals(accordionPanel.getSelectedTabs().get(0).getTitle(), "Panel1");
 
         // Act
-        tabView.toggleTab(2);
+        accordionPanel.toggleTab(2);
 
         // Assert - part 2
         assertNoJavascriptErrors();
-        Assertions.assertEquals(tabView.getSelectedTab().getIndex(), 2);
-        Assertions.assertEquals(tabView.getSelectedTab().getTitle(), "Tab3");
+        Assertions.assertNotNull(accordionPanel.getSelectedTabs());
+        Assertions.assertEquals(accordionPanel.getSelectedTabs().size(), 1);
+        Assertions.assertEquals(accordionPanel.getSelectedTabs().get(0).getIndex(), 2);
+        Assertions.assertEquals(accordionPanel.getSelectedTabs().get(0).getTitle(), "Panel3");
     }
 
     public static class Page extends AbstractPrimePage {
-        @FindBy(id = "form:tabview")
-        TabView tabView;
+        @FindBy(id = "form:accordionpanel")
+        AccordionPanel accordionPanel;
 
         @FindBy(id = "form:button")
         CommandButton button;
 
         @Override
         public String getLocation() {
-            return "tabview/tabView001.xhtml";
+            return "accordionpanel/accordionPanel001.xhtml";
         }
     }
 }
