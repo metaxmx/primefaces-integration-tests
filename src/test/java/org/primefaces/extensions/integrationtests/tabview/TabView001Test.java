@@ -21,7 +21,11 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
+import org.primefaces.extensions.selenium.component.Tab;
 import org.primefaces.extensions.selenium.component.TabView;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TabView001Test extends AbstractPrimePageTest {
 
@@ -35,6 +39,18 @@ public class TabView001Test extends AbstractPrimePageTest {
         Assertions.assertEquals(tabView.getHeaders().size(), 3);
         Assertions.assertEquals(tabView.getTabHeader(0), "Tab1");
         Assertions.assertEquals(tabView.getActiveTabHeader(), "Tab1");
+
+        List<Tab> tabs = tabView.getTabs();
+        Assertions.assertEquals(tabs.size(), 3);
+        AtomicInteger cnt = new AtomicInteger(0);
+        tabs.forEach(tab -> {
+                    Assertions.assertNotNull(tab.getHeader());
+                    Assertions.assertNotNull(tab.getContent());
+                    Assertions.assertEquals(tab.getIndex(), cnt.get());
+                    cnt.incrementAndGet();
+                });
+        Assertions.assertEquals(tabView.getTabs().get(0).getTitle(), "Tab1");
+        Assertions.assertEquals(tabView.getTabs().get(1).getTitle(), "Tab2");
 
         // Act
         tabView.toggleTab(2);
