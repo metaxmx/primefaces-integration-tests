@@ -37,26 +37,26 @@ public class TabView001Test extends AbstractPrimePageTest {
         // Assert - part 1
         List<Tab> tabs = tabView.getTabs();
         Assertions.assertNotNull(tabs);
-        Assertions.assertEquals(tabs.size(), 3);
+        Assertions.assertEquals(3, tabs.size());
         AtomicInteger cnt = new AtomicInteger(0);
         tabs.forEach(tab -> {
                     Assertions.assertNotNull(tab.getHeader());
                     Assertions.assertNotNull(tab.getContent());
                     Assertions.assertEquals(tab.getIndex(), cnt.getAndIncrement());
                 });
-        Assertions.assertEquals(tabs.get(0).getTitle(), "Tab1");
-        Assertions.assertEquals(tabs.get(1).getTitle(), "Tab2");
+        Assertions.assertEquals("Tab1", tabs.get(0).getTitle());
+        Assertions.assertEquals("Tab2", tabs.get(1).getTitle());
 
-        Assertions.assertEquals(tabView.getSelectedTab().getIndex(), 0);
-        Assertions.assertEquals(tabView.getSelectedTab().getTitle(), "Tab1");
+        Assertions.assertEquals(0, tabView.getSelectedTab().getIndex());
+        Assertions.assertEquals("Tab1", tabView.getSelectedTab().getTitle());
 
         // Act
         tabView.toggleTab(2);
 
         // Assert - part 2
         assertNoJavascriptErrors();
-        Assertions.assertEquals(tabView.getSelectedTab().getIndex(), 2);
-        Assertions.assertEquals(tabView.getSelectedTab().getTitle(), "Tab3");
+        Assertions.assertEquals(2, tabView.getSelectedTab().getIndex());
+        Assertions.assertEquals("Tab3", tabView.getSelectedTab().getTitle());
     }
 
     public static class Page extends AbstractPrimePage {
