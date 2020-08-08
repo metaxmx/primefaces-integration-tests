@@ -21,13 +21,13 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
+import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.TabView;
 import org.primefaces.extensions.selenium.component.model.Tab;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class TabView001Test extends AbstractPrimePageTest {
+public class TabView002Test extends AbstractPrimePageTest {
 
     @Test
     public void test(Page page) {
@@ -37,38 +37,44 @@ public class TabView001Test extends AbstractPrimePageTest {
         // Assert - part 1
         List<Tab> tabs = tabView.getTabs();
         Assertions.assertNotNull(tabs);
-        Assertions.assertEquals(3, tabs.size());
-        AtomicInteger cnt = new AtomicInteger(0);
-        tabs.forEach(tab -> {
-                    Assertions.assertNotNull(tab.getHeader());
-                    Assertions.assertNotNull(tab.getContent());
-                    Assertions.assertEquals(tab.getIndex(), cnt.getAndIncrement());
-                });
-        Assertions.assertEquals("Tab1", tabs.get(0).getTitle());
-        Assertions.assertEquals("Tab2", tabs.get(1).getTitle());
+        Assertions.assertEquals("Lewis", page.inputtext1.getValue());
 
-        Assertions.assertEquals(0, tabView.getSelectedTab().getIndex());
-        Assertions.assertEquals("Tab1", tabView.getSelectedTab().getTitle());
+        // Act
+        tabView.toggleTab(1);
+
+        // Assert - part 2
+        assertNoJavascriptErrors();
+        Assertions.assertEquals(1, tabView.getSelectedTab().getIndex());
+        Assertions.assertEquals("Max", page.inputtext2.getValue());
 
         // Act
         tabView.toggleTab(2);
 
-        // Assert - part 2
+        // Assert - part 3
         assertNoJavascriptErrors();
         Assertions.assertEquals(2, tabView.getSelectedTab().getIndex());
-        Assertions.assertEquals("Tab3", tabView.getSelectedTab().getTitle());
+        Assertions.assertEquals("Charles", page.inputtext3.getValue());
     }
 
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:tabview")
         TabView tabView;
 
+        @FindBy(id = "form:tabview:inputtext1")
+        InputText inputtext1;
+
+        @FindBy(id = "form:tabview:inputtext2")
+        InputText inputtext2;
+
+        @FindBy(id = "form:tabview:inputtext3")
+        InputText inputtext3;
+
         @FindBy(id = "form:button")
         CommandButton button;
 
         @Override
         public String getLocation() {
-            return "tabview/tabView001.xhtml";
+            return "tabview/tabView002.xhtml";
         }
     }
 }
