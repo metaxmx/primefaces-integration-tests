@@ -20,7 +20,9 @@ import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
@@ -31,7 +33,8 @@ import org.primefaces.extensions.selenium.component.DatePicker;
 public class DatePicker001Test extends AbstractPrimePageTest {
 
     @Test
-    public void test(Page page) {
+    @DisplayName("DatePicker: set date and basic panel validation")
+    public void testBasic(Page page) {
         // Arrange
         DatePicker datePicker = page.datePicker;
         Assertions.assertEquals(LocalDate.now(), datePicker.getValue().toLocalDate());
@@ -52,6 +55,31 @@ public class DatePicker001Test extends AbstractPrimePageTest {
         page.button.click();
         LocalDate newValue = datePicker.getValueAsLocalDate();
         Assertions.assertEquals(value, newValue);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+    }
+
+    @Test
+    @DisplayName("DatePicker: select date via click on day")
+    public void testSelectDate(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        LocalDate value = LocalDate.of(1978, 2, 19);
+
+        // Act
+        datePicker.setValue(value);
+        datePicker.click(); // focus to bring up panel
+        datePicker.getPanel().findElement(By.className("ui-datepicker-next")).click();
+        datePicker.getPanel().findElement(By.linkText("25")).click();
+
+        // Assert selected value
+        LocalDate expectedDate = LocalDate.of(1978, 3, 25);
+        Assertions.assertEquals(expectedDate, datePicker.getValueAsLocalDate());
+
+        // Assert Submit Value
+        page.button.click();
+        LocalDate newValue = datePicker.getValueAsLocalDate();
+        Assertions.assertEquals(expectedDate, newValue);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
     }
