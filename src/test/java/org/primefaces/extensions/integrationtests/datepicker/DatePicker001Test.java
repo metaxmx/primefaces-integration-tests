@@ -21,18 +21,21 @@ import java.time.format.DateTimeFormatter;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 
 public class DatePicker001Test extends AbstractPrimePageTest {
 
     @Test
+    @Order(1)
     @DisplayName("DatePicker: set date and basic panel validation")
     public void testBasic(Page page) {
         // Arrange
@@ -60,6 +63,7 @@ public class DatePicker001Test extends AbstractPrimePageTest {
     }
 
     @Test
+    @Order(2)
     @DisplayName("DatePicker: select date via click on day")
     public void testSelectDate(Page page) {
         // Arrange
@@ -82,6 +86,31 @@ public class DatePicker001Test extends AbstractPrimePageTest {
         Assertions.assertEquals(expectedDate, newValue);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("DatePicker: highlight today and selected")
+    public void testHighlight(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+
+        // Act
+        LocalDate selectedDate = LocalDate.now();
+        if (selectedDate.getDayOfMonth() == 1) {
+            selectedDate = selectedDate.plusMonths(1).minusDays(1);
+        }
+        else {
+            selectedDate = selectedDate.minusDays(1);
+        }
+        datePicker.setValue(selectedDate);
+        datePicker.click(); // focus to bring up panel
+
+        //Assert panel
+        String currentDayOfMonth = ((Integer)LocalDate.now().getDayOfMonth()).toString();
+        String selectedDayOfMonth = ((Integer)selectedDate.getDayOfMonth()).toString();
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(selectedDayOfMonth)), "ui-state-active"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(currentDayOfMonth)), "ui-state-highlight"));
     }
 
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
