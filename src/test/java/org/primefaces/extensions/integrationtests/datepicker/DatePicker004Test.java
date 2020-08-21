@@ -54,13 +54,13 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         Assertions.assertTrue(text.contains("February"));
 
         WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
-        Assertions.assertEquals("14", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText()); //TODO: sort out issues with time and timezone
+        Assertions.assertEquals("11", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText());
         Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
 
         // Assert Submit Value
         page.button.click();
         LocalDateTime newValue = datePicker.getValue();
-        Assertions.assertEquals(value.toLocalDate(), newValue.toLocalDate()); //TODO: sort out issues with time and timezone
+        Assertions.assertEquals(value, newValue);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
         assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
     }
