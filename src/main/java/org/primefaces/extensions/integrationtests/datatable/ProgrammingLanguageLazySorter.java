@@ -1,20 +1,20 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
-import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
-
 import java.lang.reflect.Field;
 import java.util.Comparator;
 
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
+
 public class ProgrammingLanguageLazySorter implements Comparator<ProgrammingLanguage> {
 
-    private String sortField;
+    private final String sortField;
 
-    private SortOrder sortOrder;
+    private final SortOrder sortOrder;
 
     public ProgrammingLanguageLazySorter(SortMeta sortMeta) {
-        this.sortField = sortMeta.getSortField();
-        this.sortOrder = sortMeta.getSortOrder();
+        sortField = sortMeta.getSortField();
+        sortOrder = sortMeta.getSortOrder();
     }
 
     public ProgrammingLanguageLazySorter(String sortField, SortOrder sortOrder) {
@@ -22,17 +22,17 @@ public class ProgrammingLanguageLazySorter implements Comparator<ProgrammingLang
         this.sortOrder = sortOrder;
     }
 
-    public int compare(ProgrammingLanguage lang1, ProgrammingLanguage lang2) {
+    @Override public int compare(ProgrammingLanguage lang1, ProgrammingLanguage lang2) {
         try {
-            Field field = getLangField(this.sortField);
+            Field field = getLangField(sortField);
             Object value1 = field.get(lang1);
             Object value2 = field.get(lang2);
 
-            int value = ((Comparable)value1).compareTo(value2);
+            int value = ((Comparable) value1).compareTo(value2);
 
             return SortOrder.ASCENDING.equals(sortOrder) ? value : -1 * value;
         }
-        catch(Exception e) {
+        catch (Exception e) {
             throw new RuntimeException();
         }
     }

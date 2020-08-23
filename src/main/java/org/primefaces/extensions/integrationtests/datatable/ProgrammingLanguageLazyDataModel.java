@@ -1,23 +1,24 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.MatchMode;
-import org.primefaces.model.SortMeta;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.MatchMode;
+import org.primefaces.model.SortMeta;
+
 public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingLanguage> {
 
-    private List<ProgrammingLanguage> langs;
+    private static final long serialVersionUID = -3415081263308946252L;
+    private final List<ProgrammingLanguage> langs;
 
     public ProgrammingLanguageLazyDataModel() {
         langs = new ArrayList<>();
-        for (int i = 1; i<=75; i++) {
+        for (int i = 1; i <= 75; i++) {
             langs.add(new ProgrammingLanguage(i, "Language " + i, 1990 + (i % 10)));
         }
     }
@@ -28,11 +29,11 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
 
         if (filterMeta != null && !filterMeta.isEmpty()) {
             for (FilterMeta meta : filterMeta.values()) {
-                if (meta.getFilterValue()!=null) {
+                if (meta.getFilterValue() != null) {
                     langsStream = langsStream.filter(lang -> {
-                        if (meta.getFilterField().equals("firstAppeared") && meta.getFilterMatchMode()==MatchMode.GREATER_THAN_EQUALS) {
-                            int filterValueInt = Integer.parseInt((String)meta.getFilterValue());
-                            return (int)lang.getFirstAppeared() >= filterValueInt;
+                        if (meta.getFilterField().equals("firstAppeared") && meta.getFilterMatchMode() == MatchMode.GREATER_THAN_EQUALS) {
+                            int filterValueInt = Integer.parseInt((String) meta.getFilterValue());
+                            return lang.getFirstAppeared() >= filterValueInt;
                         }
                         return true; //TODO: add additional implementation when required
                     });
@@ -47,8 +48,8 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
         }
 
         return langsStream
-                .skip(first).limit(pageSize)
-                .collect(Collectors.toList());
+                    .skip(first).limit(pageSize)
+                    .collect(Collectors.toList());
     }
 
     @Override
@@ -59,7 +60,7 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
     @Override
     public ProgrammingLanguage getRowData(String rowKey) {
         int rowKeyNumeric = Integer.parseInt(rowKey);
-        return langs.stream().filter(lang -> lang.getId()==rowKeyNumeric).findFirst().get();
+        return langs.stream().filter(lang -> lang.getId() == rowKeyNumeric).findFirst().get();
     }
 
     @Override

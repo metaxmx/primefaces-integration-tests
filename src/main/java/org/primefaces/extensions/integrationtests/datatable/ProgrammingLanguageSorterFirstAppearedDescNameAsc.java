@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class ProgrammingLanguageSorterFirstAppearedDescNameAsc implements Comparator<ProgrammingLanguage> {
 
-    public int compare(ProgrammingLanguage lang1, ProgrammingLanguage lang2) {
+    @Override public int compare(ProgrammingLanguage lang1, ProgrammingLanguage lang2) {
         try {
             if (lang1.getFirstAppeared() == lang2.getFirstAppeared()) {
                 return lang1.getName().compareTo(lang2.getName());
@@ -12,9 +12,11 @@ public class ProgrammingLanguageSorterFirstAppearedDescNameAsc implements Compar
             else if (lang1.getFirstAppeared() < lang2.getFirstAppeared()) {
                 return 1;
             }
-            else return -1;
+            else {
+                return -1;
+            }
         }
-        catch(Exception e) {
+        catch (Exception e) {
             throw new RuntimeException();
         }
     }
