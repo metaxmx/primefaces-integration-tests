@@ -94,13 +94,16 @@ public class DataTable003Test extends AbstractDataTableTest {
 
     private static boolean hasCssClass(WebElement element, String cssClass) {
         String classes = element.getAttribute("class");
-        System.out.println("hasCssClass: cssClass: " + cssClass + " in element-css: " + classes);
+        System.out.println("hasCssClass: cssClass: '" + cssClass + "' in element-css: '" + classes + "'");
         if (classes == null || cssClass.isEmpty()) {
             return false;
         }
 
         for (String currentClass : classes.split(" ")) {
-            if (currentClass.trim().equalsIgnoreCase(cssClass.trim())) {
+            String current = currentClass.trim();
+            boolean result = current.equalsIgnoreCase(cssClass);
+            System.out.println("Testing: current: '" + current + "' against: '" + cssClass + "' = " + result);
+            if (result) {
                 return true;
             }
         }
