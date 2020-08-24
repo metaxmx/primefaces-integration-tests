@@ -58,12 +58,8 @@ public class DataTable003Test extends AbstractDataTableTest {
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
 
         // Assert
-        System.out.println("DataTable003Test.testMultiSort");
-        System.out.println(
-                    "eltSortFirstAppeared: CSS-class: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
-        System.out.println("eltSortName: CSS-class: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
+        Assertions.assertTrue(hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
+        Assertions.assertTrue(hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
 
         List<ProgrammingLanguage> langsSorted = langs.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameAsc()).collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
