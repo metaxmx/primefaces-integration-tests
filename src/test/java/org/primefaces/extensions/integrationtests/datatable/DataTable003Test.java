@@ -15,6 +15,9 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -22,25 +25,14 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
-import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable003Test extends AbstractDataTableTest {
 
@@ -67,7 +59,8 @@ public class DataTable003Test extends AbstractDataTableTest {
 
         // Assert
         System.out.println("DataTable003Test.testMultiSort");
-        System.out.println("eltSortFirstAppeared: CSS-class: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
+        System.out.println(
+                    "eltSortFirstAppeared: CSS-class: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
         System.out.println("eltSortName: CSS-class: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
@@ -96,14 +89,28 @@ public class DataTable003Test extends AbstractDataTableTest {
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
 
         // Assert
-        System.out.println("DataTable003Test.testMultiSort2");
-        System.out.println("eltSortFirstAppeared: CSS-class: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
-        System.out.println("eltSortName: CSS-class: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
+        Assertions.assertTrue(hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
+        Assertions.assertTrue(hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
 
         List<ProgrammingLanguage> langsSorted = langs.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameDesc()).collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
+    }
+
+    private static boolean hasCssClass(WebElement element, String cssClass) {
+        String classes = element.getAttribute("class");
+        if (classes == null || cssClass.isEmpty()) {
+            return false;
+        }
+
+        System.out.println("hasCssClass: cssClass: " + cssClass + " in element-css: " + classes);
+
+        for (String currentClass : classes.split(" ")) {
+            if (currentClass.trim().equalsIgnoreCase(cssClass.trim())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void assertConfiguration(JSONObject cfg) {
