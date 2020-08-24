@@ -26,6 +26,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -61,10 +62,13 @@ public class DataTable003Test extends AbstractDataTableTest {
         actions.click(eltSortFirstAppeared).click(eltSortFirstAppeared).perform();
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
         // 2) additional sort by name asc
-        actions.keyDown(Keys.CONTROL).click(eltSortName).keyUp(Keys.CONTROL).perform();
+        actions.keyDown(Keys.META).click(eltSortName).keyUp(Keys.META).perform();
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
 
         // Assert
+        System.out.println("DataTable003Test.testMultiSort");
+        System.out.println("eltSortFirstAppeared: CSS-class: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
+        System.out.println("eltSortName: CSS-class: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
 
@@ -88,10 +92,13 @@ public class DataTable003Test extends AbstractDataTableTest {
         actions.click(eltSortFirstAppeared).click(eltSortFirstAppeared).perform();
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
         // 2) additional sort by name asc
-        actions.keyDown(Keys.CONTROL).click(eltSortName).click(eltSortName).keyUp(Keys.CONTROL).perform();
+        actions.keyDown(Keys.META).click(eltSortName).click(eltSortName).keyUp(Keys.META).perform();
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
 
         // Assert
+        System.out.println("DataTable003Test.testMultiSort2");
+        System.out.println("eltSortFirstAppeared: CSS-class: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
+        System.out.println("eltSortName: CSS-class: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
 

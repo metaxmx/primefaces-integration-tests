@@ -21,9 +21,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.AutoComplete;
 import org.primefaces.extensions.selenium.component.CommandButton;
 
@@ -60,7 +63,9 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
 
         // Act
         autoComplete.activate();
-        autoComplete.setValue("bye");
+        autoComplete.setValueWithoutTab("bye");
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(autoComplete.getPanel()));
+        autoComplete.getInput().sendKeys(new CharSequence[]{Keys.TAB});
         page.button.click();
 
         // Assert
@@ -78,7 +83,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         // Act
         autoComplete.activate();
         autoComplete.setValueWithoutTab("Prime");
-        autoComplete.show();
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(autoComplete.getPanel()));
 
         // Assert - Part 1
         Assertions.assertTrue(autoComplete.getPanel().isDisplayed());
