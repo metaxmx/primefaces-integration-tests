@@ -18,15 +18,19 @@ package org.primefaces.extensions.integrationtests.datatable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.openejb.jee.Web;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -50,16 +54,18 @@ public class DataTable003Test extends AbstractDataTableTest {
         Actions actions = new Actions(page.getWebDriver());
         WebElement eltSortFirstAppeared = dataTable.getHeader().getCell(2).getWebElement();
         WebElement eltSortName = dataTable.getHeader().getCell(1).getWebElement();
+
         // 1) sort by firstAppeared desc
-        actions.click(eltSortFirstAppeared).click(eltSortFirstAppeared).perform();
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        PrimeSelenium.guardAjax(eltSortFirstAppeared).click();
+        PrimeSelenium.guardAjax(eltSortFirstAppeared).click();
+
         // 2) additional sort by name asc
-        actions.keyDown(Keys.META).click(eltSortName).keyUp(Keys.META).perform();
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        Action actionMetaPlusSortClick = actions.keyDown(Keys.META).click(eltSortName).keyUp(Keys.META).build();
+        PrimeSelenium.guardAjax(actionMetaPlusSortClick).perform();
 
         // Assert
-        Assertions.assertTrue(hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
-        Assertions.assertTrue(hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
 
         List<ProgrammingLanguage> langsSorted = langs.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameAsc()).collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
@@ -77,38 +83,27 @@ public class DataTable003Test extends AbstractDataTableTest {
         Actions actions = new Actions(page.getWebDriver());
         WebElement eltSortFirstAppeared = dataTable.getHeader().getCell(2).getWebElement();
         WebElement eltSortName = dataTable.getHeader().getCell(1).getWebElement();
+
         // 1) sort by firstAppeared desc
-        actions.click(eltSortFirstAppeared).click(eltSortFirstAppeared).perform();
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
-        // 2) additional sort by name asc
-        actions.keyDown(Keys.META).click(eltSortName).click(eltSortName).keyUp(Keys.META).perform();
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        PrimeSelenium.guardAjax(eltSortFirstAppeared).click();
+        PrimeSelenium.guardAjax(eltSortFirstAppeared).click();
+
+        // 2) additional sort by name desc
+        Action actionMetaPlusSortClick = actions.keyDown(Keys.META).click(eltSortName).keyUp(Keys.META).build();
+        PrimeSelenium.guardAjax(actionMetaPlusSortClick).perform();
+        PrimeSelenium.guardAjax(actionMetaPlusSortClick).perform();
 
         // Assert
-        Assertions.assertTrue(hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
-        Assertions.assertTrue(hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
 
         List<ProgrammingLanguage> langsSorted = langs.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameDesc()).collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
     }
 
-    private static boolean hasCssClass(WebElement element, String cssClass) {
-        String classes = element.getAttribute("class");
-        System.out.println("hasCssClass: cssClass: '" + cssClass + "' in element-css: '" + classes + "'");
-        if (classes == null || cssClass.isEmpty()) {
-            return false;
-        }
-
-        for (String currentClass : classes.split(" ")) {
-            String current = currentClass.trim();
-            boolean result = current.equalsIgnoreCase(cssClass);
-            System.out.println("Testing: current: '" + current + "' against: '" + cssClass + "' = " + result);
-            if (result) {
-                return true;
-            }
-        }
-
-        return false;
+    private void logColumnIconCssClasses(WebElement eltSortName, WebElement eltSortFirstAppeared) {
+        System.out.println("eltSortFirstAppeared; css-classes: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
+        System.out.println("eltSortName; css-classes: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
     }
 
     private void assertConfiguration(JSONObject cfg) {
