@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProgrammingLanguage implements Serializable {
     private static final long serialVersionUID = 398626647627541586L;
-    private int id;
+    private Integer id;
     private String name;
-    private int firstAppeared;
+    private Integer firstAppeared;
 }
