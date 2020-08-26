@@ -6,14 +6,11 @@ public class ProgrammingLanguageSorterFirstAppearedDescNameAsc implements Compar
 
     @Override public int compare(ProgrammingLanguage lang1, ProgrammingLanguage lang2) {
         try {
-            if (lang1.getFirstAppeared() == lang2.getFirstAppeared()) {
+            if (lang1.getFirstAppeared().equals(lang2.getFirstAppeared())) {
                 return lang1.getName().compareTo(lang2.getName());
             }
-            else if (lang1.getFirstAppeared() < lang2.getFirstAppeared()) {
-                return 1;
-            }
             else {
-                return -1;
+                return lang2.getFirstAppeared().compareTo(lang1.getFirstAppeared());
             }
         }
         catch (Exception e) {

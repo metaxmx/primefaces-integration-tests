@@ -48,16 +48,14 @@ public class DataTable004Test extends AbstractDataTableTest {
         Assertions.assertNotNull(dataTable);
 
         // Act
-        dataTable.getRow(2).getCell(0).getWebElement().click();
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
+        PrimeSelenium.guardAjax(dataTable.getRow(2).getCell(0).getWebElement()).click();
 
         // Assert
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("ProgrammingLanguage Selected"));
         Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(langs.get(2).getName()));
 
         // Act - other row
-        dataTable.getRow(4).getCell(0).getWebElement().click();
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
+        PrimeSelenium.guardAjax(dataTable.getRow(4).getCell(0).getWebElement()).click();
 
         // Assert
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("ProgrammingLanguage Selected"));
