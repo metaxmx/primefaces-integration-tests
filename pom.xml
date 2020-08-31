@@ -23,7 +23,7 @@
         <java.min.version>1.8</java.min.version>
         <!-- dependency versions -->
         <primefaces.version>8.0</primefaces.version>
-        <primefaces-selenium.version>8.0.4</primefaces-selenium.version>
+        <primefaces-selenium.version>8.0.5</primefaces-selenium.version>
         <lombok.version>1.18.12</lombok.version>
         <myfaces.version>2.3.6</myfaces.version>
         <junit.version>5.5.2</junit.version>
