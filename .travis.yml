@@ -12,7 +12,8 @@ env:
 
 before_install:
   - sudo apt-get -y install firefox-geckodriver
-
+install:
+  - git clone https://github.com/primefaces-extensions/primefaces-selenium && cd primefaces-selenium && mvn install && cd ..
 script:
   - ln -s /usr/bin/geckodriver geckodriver
   - source .travis/install-chromedriver.sh
