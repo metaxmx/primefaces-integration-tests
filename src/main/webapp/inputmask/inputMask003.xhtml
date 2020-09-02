@@ -14,8 +14,7 @@
         <h:form id="form">
             <p:inputMask id="alphanumeric" value="#{inputMask001.alphanumeric}" mask="a*-999-a999"/>
 
-            <!-- TODO: For PF9 the ? must be replaced with [ ] -->
-            <p:inputMask id="optional" value="#{inputMask001.optional}" mask="(999) 999-9999? x99999"/>
+            <p:inputMask id="optional" value="#{inputMask001.optional}" mask="(999) 999-9999[ x99999]"/>
 
             <p:commandButton id="button" update="@form" value="Submit"/>
         </h:form>

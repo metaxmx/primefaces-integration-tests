@@ -89,7 +89,7 @@ public class InputMask001Test extends AbstractInputMaskTest {
 
         // Assert
         Assertions.assertEquals("456-78-____", inputMask.getWidgetValue());
-        // TODO: PF9 Assertions.assertEquals("45678", inputMask.getWidgetValueUnmasked());
+        Assertions.assertEquals("45678", inputMask.getWidgetValueUnmasked());
         assertConfiguration(inputMask.getWidgetConfiguration());
     }
 
@@ -98,7 +98,7 @@ public class InputMask001Test extends AbstractInputMaskTest {
         System.out.println("InputMask Config = " + cfg);
         Assertions.assertEquals("999-99-9999", cfg.getString("mask"));
         Assertions.assertFalse(cfg.has("placeholder"));
-        Assertions.assertFalse(cfg.getBoolean(AUTO_CLEAR));
+        Assertions.assertFalse(cfg.getBoolean(AbstractInputMaskTest.AUTO_CLEAR));
     }
 
     public static class Page extends AbstractPrimePage {

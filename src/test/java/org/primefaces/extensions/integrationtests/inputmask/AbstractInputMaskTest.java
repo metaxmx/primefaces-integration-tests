@@ -19,10 +19,7 @@ import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 
 public abstract class AbstractInputMaskTest extends AbstractPrimePageTest {
 
-    // TODO: PF9 this is renamed to "clearMaskOnLostFocus"
-    public static final String AUTO_CLEAR = "autoclear";
-
-    // TODO: PF9 ? must be [] so "(999) 999-9999[ x99999]"
-    public static final String OPTIONAL_MASK = "(999) 999-9999? x99999";
+    public static final String AUTO_CLEAR = "clearMaskOnLostFocus";
+    public static final String OPTIONAL_MASK = "(999) 999-9999[ x99999]";
 
 }
