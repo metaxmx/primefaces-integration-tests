@@ -85,13 +85,17 @@ public abstract class PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAda
         container.close();
     }
 
-    private int createRandomPort() {
+    private static int createRandomPort() {
         Random random = new Random();
         return random.nextInt((9000 - 8000) + 1) + 8000;
     }
 
     public Container getContainer() {
         return container;
+    }
+
+    public static boolean isHeadless() {
+        return Boolean.parseBoolean(System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT));
     }
 
 }

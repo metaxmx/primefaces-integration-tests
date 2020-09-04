@@ -31,11 +31,7 @@ public class PrimeFacesSeleniumTomEEChromeAdapterImpl extends PrimeFacesSelenium
     public WebDriver createWebDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        chromeOptions.setHeadless(
-                    Boolean.parseBoolean(
-                                System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
-                    )
-        );
+        chromeOptions.setHeadless(PrimeFacesSeleniumTomEEAdapter.isHeadless());
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.BROWSER, Level.ALL);
         chromeOptions.setCapability("goog:loggingPrefs", logPrefs);

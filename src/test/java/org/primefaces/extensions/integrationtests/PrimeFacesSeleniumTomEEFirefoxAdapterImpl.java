@@ -23,19 +23,11 @@ import org.primefaces.extensions.selenium.spi.PrimeSeleniumAdapter;
 
 public class PrimeFacesSeleniumTomEEFirefoxAdapterImpl extends PrimeFacesSeleniumTomEEAdapter implements PrimeSeleniumAdapter {
 
-    private static final String HEADLESS_MODE_SYSPROP_NAME = "webdriver.headless";
-
-    private static final String HEADLESS_MODE_SYSPROP_VAL_DEFAULT = "false";
-
     @Override
     public WebDriver createWebDriver() {
         FirefoxOptions options = new FirefoxOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        options.setHeadless(
-                    Boolean.parseBoolean(
-                                System.getProperty(HEADLESS_MODE_SYSPROP_NAME, HEADLESS_MODE_SYSPROP_VAL_DEFAULT)
-                    )
-        );
+        options.setHeadless(PrimeFacesSeleniumTomEEAdapter.isHeadless());
         return new FirefoxDriver(options);
     }
 
