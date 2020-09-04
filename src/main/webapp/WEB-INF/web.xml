@@ -24,4 +24,16 @@
         <param-value>true</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>primefaces.TRANSFORM_METADATA</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.MARK_INPUT_AS_INVALID_ON_ERROR_MSG</param-name>
+        <param-value>true</param-value>
+    </context-param>
 </web-app>
