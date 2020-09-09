@@ -20,7 +20,8 @@
         <webdriver.headless>false</webdriver.headless>
         <!-- build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.min.version>1.8</java.min.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <!-- dependency versions -->
         <primefaces.version>9.0-SNAPSHOT</primefaces.version>
         <primefaces-selenium.version>9.0-SNAPSHOT</primefaces-selenium.version>
@@ -28,7 +29,7 @@
         <lombok.version>1.18.12</lombok.version>
         <myfaces.version>2.3.6</myfaces.version>
         <junit.version>5.5.2</junit.version>
-        <tomee.version>8.0.3</tomee.version>
+        <tomee.version>8.0.4</tomee.version>
         <!-- plugin versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
@@ -123,8 +124,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${java.min.version}</source>
-                    <target>${java.min.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
