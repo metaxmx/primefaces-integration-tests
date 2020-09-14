@@ -44,7 +44,7 @@ public class DataTable007Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
-    @DisplayName("DataTable: Edit - Row")
+    @DisplayName("DataTable: Edit-Row")
     public void testEditRow(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -85,6 +85,49 @@ public class DataTable007Test extends AbstractDataTableTest {
         Assertions.assertEquals("2020", row.getCell(2).getText());
         Assertions.assertEquals("ProgrammingLanguage Edited", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals(Integer.toString(langs.get(2).getId()), page.messages.getMessage(0).getDetail());
+
+        // Act - submit
+        page.button.click();
+
+        // Assert
+        row = dataTable.getRow(2);
+        Assertions.assertEquals("abc", row.getCell(1).getText());
+        Assertions.assertEquals("2020", row.getCell(2).getText());
+
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("DataTable: Filter combined with Edit-Row; https://github.com/primefaces/primefaces/issues/1442")
+    public void testFilterAndEditRow(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Act - filter
+        dataTable.filter("Name", "Java");
+
+        // Act - edit and accept
+        Row row = dataTable.getRow(1);
+        row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")).click();
+        row.getCell(1).getWebElement().findElement(By.tagName("input")).clear();
+        row.getCell(1).getWebElement().findElement(By.tagName("input")).sendKeys("abc");
+        row.getCell(2).getWebElement().findElement(By.tagName("input")).clear();
+        row.getCell(2).getWebElement().findElement(By.tagName("input")).sendKeys("2020");
+        PrimeSelenium.guardAjax(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-check"))).click();
+
+        // Act - remove filter
+        // TODO: add remove-filter functionality to PF Selenium
+        dataTable.filter("Name", "x");
+        dataTable.getHeader().getCell("Name").get().getColumnFilter().sendKeys(Keys.BACK_SPACE);
+        try {
+            // default-filter runs delayed - so wait...
+            Thread.sleep(500);
+        }
+        catch (InterruptedException ex) {
+        }
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
 
         // Act - submit
         page.button.click();

@@ -32,6 +32,7 @@ public class DataTable007 implements Serializable {
     private static final long serialVersionUID = -7518459955779385834L;
 
     private List<ProgrammingLanguage> progLanguages;
+    private List<ProgrammingLanguage> filteredProgLanguages;
 
     @Inject
     private ProgrammingLanguageService service;

@@ -16,7 +16,7 @@
                 <p:autoUpdate />
             </p:messages>
 
-            <p:dataTable id="datatable" value="#{dataTable007.progLanguages}" var="lang" editable="true">
+            <p:dataTable id="datatable" value="#{dataTable007.progLanguages}" var="lang" editable="true" filteredValue="#{dataTable001.filteredProgLanguages}">
                 <p:ajax event="rowEdit" listener="#{dataTable007.onRowEdit}"/>
                 <p:ajax event="rowEditCancel" listener="#{dataTable007.onRowCancel}"/>
 
@@ -24,7 +24,7 @@
                       <h:outputText value="#{lang.id}" />
                 </p:column>
 
-                <p:column headerText="Name" sortBy="#{lang.name}">
+                <p:column headerText="Name" sortBy="#{lang.name}" filterBy="#{lang.name}" filterMatchMode="contains">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{lang.name}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{lang.name}" style="width:100%" label="Name" /></f:facet>
