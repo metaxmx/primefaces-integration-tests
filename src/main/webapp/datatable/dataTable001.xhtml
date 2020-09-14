@@ -12,7 +12,9 @@
     <h:body>
 
         <h:form id="form">
-            <p:dataTable id="datatable" value="#{dataTable001.progLanguages}" var="lang" paginator="true" rows="3" filteredValue="#{dataTable001.filteredProgLanguages}">
+            <p:dataTable id="datatable" value="#{dataTable001.progLanguages}" var="lang" paginator="true" rows="3" filteredValue="#{dataTable001.filteredProgLanguages}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="2,3,5,10">
                 <p:column headerText="ID" sortBy="#{lang.id}">
                     <h:outputText value="#{lang.id}" />
                 </p:column>
@@ -27,6 +29,7 @@
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form"/>
+            <p:commandButton id="buttonResetTable" value="reset table" update="@form" action="#{dataTable001.resetTable()}" />
         </h:form>
 
     </h:body>

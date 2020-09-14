@@ -14,8 +14,11 @@ package org.primefaces.extensions.integrationtests.datatable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.primefaces.component.datatable.DataTable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,5 +42,12 @@ public class DataTable001 implements Serializable {
     @PostConstruct
     public void init() {
         progLanguages = service.getLangs();
+    }
+
+    public void resetTable() {
+        DataTable dataTable = (DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("form:datatable");
+        dataTable.reset();
+
+        progLanguages = service.getLangs(); //progLanguages may have been sorted from DataTable
     }
 }

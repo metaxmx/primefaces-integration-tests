@@ -20,8 +20,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -150,6 +153,61 @@ public class DataTable001Test extends AbstractDataTableTest {
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("DataTable: rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465")
+    public void testRowsPerPageAndReset(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Assert
+        Select selectRowsPerPage = new Select(dataTable.getPaginatorWebElement().findElement(By.className("ui-paginator-rpp-options")));
+        Assertions.assertEquals("3", selectRowsPerPage.getFirstSelectedOption().getText());
+        Assertions.assertEquals(3, dataTable.getRows().size());
+
+        // Act
+        dataTable.selectPage(1);
+        dataTable.sort("Name");
+        selectRowsPerPage.selectByVisibleText("10");
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+
+        // Assert
+        Assertions.assertEquals(langs.size(), dataTable.getRows().size());
+
+        // Act
+        dataTable.filter("Name", "Java");
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        PrimeSelenium.guardAjax(page.buttonResetTable).click();
+        // following lines should not be necessary...
+        // ... compensate for https://github.com/primefaces/primefaces/issues/5481
+        /*
+        dataTable.filter("Name", "x");
+        dataTable.getHeader().getCell("Name").get().getColumnFilter().sendKeys(Keys.BACK_SPACE);
+        try {
+            // default-filter runs delayed - so wait...
+            Thread.sleep(500);
+        }
+        catch (InterruptedException ex) {
+        }
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+         */
+        // ... compensate for https://github.com/primefaces/primefaces/issues/5465
+        /*
+        selectRowsPerPage = new Select(dataTable.getPaginatorWebElement().findElement(By.className("ui-paginator-rpp-options")));
+        selectRowsPerPage.selectByVisibleText("3");
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+         */
+
+        // Assert
+        selectRowsPerPage = new Select(dataTable.getPaginatorWebElement().findElement(By.className("ui-paginator-rpp-options")));
+        Assertions.assertEquals("3", selectRowsPerPage.getFirstSelectedOption().getText());
+        Assertions.assertEquals(3, dataTable.getRows().size());
+        assertRows(dataTable, langs.stream().limit(3).collect(Collectors.toList())); //implicit checks reseted sort & filter
+
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);
@@ -162,6 +220,9 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:button")
         CommandButton button;
+
+        @FindBy(id = "form:buttonResetTable")
+        CommandButton buttonResetTable;
 
         @Override
         public String getLocation() {
