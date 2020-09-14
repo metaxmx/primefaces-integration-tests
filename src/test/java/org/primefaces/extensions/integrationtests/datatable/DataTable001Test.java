@@ -137,17 +137,7 @@ public class DataTable001Test extends AbstractDataTableTest {
         // Act
         dataTable.selectPage(1);
         dataTable.sort("Name");
-        //TODO: move some filter-logic to PF Selenium?
-        dataTable.getHeader().getCell(1).getColumnFilter().clear();
-        ComponentUtils.sendKeys(dataTable.getHeader().getCell(1).getColumnFilter(), "Java");
-        try {
-            //filter runs delayed - so wait...
-            Thread.sleep(500);
-        }
-        catch (InterruptedException ex) {
-            ;
-        }
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        dataTable.filter("Name", "Java");
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = langs.stream()

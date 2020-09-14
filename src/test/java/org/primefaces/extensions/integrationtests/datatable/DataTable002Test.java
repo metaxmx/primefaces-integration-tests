@@ -138,17 +138,7 @@ public class DataTable002Test extends AbstractPrimePageTest {
         // Act
         dataTable.selectPage(1);
         dataTable.sort("First appeared");
-        //TODO: move some filter-logic to PF Selenium?
-        dataTable.getHeader().getCell(2).getColumnFilter().clear();
-        ComponentUtils.sendKeys(dataTable.getHeader().getCell(2).getColumnFilter(), "1998");
-        try {
-            //filter runs delayed - so wait...
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException ex) {
-            ;
-        }
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        dataTable.filter("First appeared", "1998");
 
         // Assert
         List<Row> rows = dataTable.getRows();
