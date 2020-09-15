@@ -15,29 +15,23 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
 import org.primefaces.extensions.selenium.component.model.data.Paginator;
 import org.primefaces.extensions.selenium.component.model.datatable.Header;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable001Test extends AbstractDataTableTest {
 
@@ -111,9 +105,9 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         // Assert
         List<ProgrammingLanguage> langsSorted = langs.stream()
-                .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
-                .limit(3)
-                .collect(Collectors.toList());
+                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .limit(3)
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
 
         // Act - descending
@@ -121,9 +115,9 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         // Assert
         langsSorted = langs.stream()
-                .sorted((l1, l2) -> l2.getName().compareTo(l1.getName()))
-                .limit(3)
-                .collect(Collectors.toList());
+                    .sorted((l1, l2) -> l2.getName().compareTo(l1.getName()))
+                    .limit(3)
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -144,10 +138,10 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = langs.stream()
-                .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
-                .filter(l -> l.getName().startsWith("Java"))
-                .limit(3)
-                .collect(Collectors.toList());
+                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .filter(l -> l.getName().startsWith("Java"))
+                    .limit(3)
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsFiltered);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -155,8 +149,9 @@ public class DataTable001Test extends AbstractDataTableTest {
 
     @Test
     @Order(4)
-    @DisplayName("DataTable: rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465")
-    public void testRowsPerPageAndReset(Page page) {
+    @Disabled("Disabled until GitHub issues #5465 and #5481 are fixed")
+    @DisplayName("DataTable: rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465 & https://github.com/primefaces/primefaces/issues/5481")
+    public void testRowsPerPageAndReset_5465_5481(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);

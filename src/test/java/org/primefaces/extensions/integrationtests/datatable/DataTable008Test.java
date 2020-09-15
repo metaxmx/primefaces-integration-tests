@@ -15,27 +15,17 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
-import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable008Test extends AbstractDataTableTest {
 
@@ -43,8 +33,9 @@ public class DataTable008Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
+    @Disabled("Disabled until GitHub issue #5481 is fixed")
     @DisplayName("DataTable: filter - issue 5481 - https://github.com/primefaces/primefaces/issues/5481")
-    public void testFilterIssue5481(Page page) {
+    public void testFilterIssue_5481(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
@@ -57,10 +48,10 @@ public class DataTable008Test extends AbstractDataTableTest {
         // Assert
         Assertions.assertEquals("2010", getFirstAppearedFilterElt(dataTable).getAttribute("value"));
         List<ProgrammingLanguage> langsFiltered = langs.stream()
-                .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
-                .filter(l -> l.getFirstAppeared()>=2010)
-                .limit(3)
-                .collect(Collectors.toList());
+                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .filter(l -> l.getFirstAppeared() >= 2010)
+                    .limit(3)
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsFiltered);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -72,16 +63,16 @@ public class DataTable008Test extends AbstractDataTableTest {
         // Assert
         Assertions.assertEquals("", getFirstAppearedFilterElt(dataTable).getAttribute("value"));
         List<ProgrammingLanguage> langsUnfilteredPage2 = langs.stream()
-                .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
-                .skip(3)
-                .limit(3)
-                .collect(Collectors.toList());
+                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .skip(3)
+                    .limit(3)
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsUnfilteredPage2);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
-    private WebElement getFirstAppearedFilterElt(DataTable dataTable) {
+    private static WebElement getFirstAppearedFilterElt(DataTable dataTable) {
         return dataTable.getHeader().getCell(2).getWebElement().findElement(By.tagName("input"));
     }
 
