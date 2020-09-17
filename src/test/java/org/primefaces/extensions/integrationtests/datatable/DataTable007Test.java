@@ -23,10 +23,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
@@ -113,16 +111,8 @@ public class DataTable007Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-check"))).click();
 
         // Act - remove filter
-        // TODO: add remove-filter functionality to PF Selenium
         dataTable.filter("Name", "x");
-        dataTable.getHeader().getCell("Name").get().getColumnFilter().sendKeys(Keys.BACK_SPACE);
-        try {
-            // default-filter runs delayed - so wait...
-            Thread.sleep(500);
-        }
-        catch (InterruptedException ex) {
-        }
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        dataTable.removeFilter("Name");
 
         // Act - submit
         page.button.click();

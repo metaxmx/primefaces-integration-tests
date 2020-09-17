@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,14 +26,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
-
-import java.util.List;
 
 public class DataTable010Test extends AbstractDataTableTest {
 
@@ -100,17 +97,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         Assertions.assertEquals("1,5", page.messages.getMessage(0).getDetail());
 
         // Act
-        //TODO: move some filter-logic to PF Selenium?
-        dataTable.getHeader().getCell(1).getColumnFilter().clear();
-        ComponentUtils.sendKeys(dataTable.getHeader().getCell(1).getColumnFilter(), "Java");
-        try {
-            //filter runs delayed - so wait...
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException ex) {
-            ;
-        }
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        dataTable.filter(1, "Java");
         page.buttonSubmit.click();
 
         // Assert
