@@ -27,13 +27,15 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: primefaces/primefaces
+          path: primefaces
       - name: build PrimeFaces
         run: cd primefaces && mvn install && cd ..
       - name: checkout PrimeFaces Selenium
         uses: actions/checkout@master
         with:
           repository: primefaces-extensions/primefaces-selenium
+          path: primefaces-selenium
       - name: build PrimeFaces Selenium
         run: cd primefaces-selenium && mvn install && cd ..
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B -V clean install -Pheadless-mode
