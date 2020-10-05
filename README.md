@@ -1,5 +1,5 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-[![Actions Status](https://github.com/primefaces-extensions/primefaces-integration-tests/workflows/Java+CI/badge.svg)](https://github.com/{owner}/primefaces-integration-tests/actions)
+[![Actions Status](https://github.com/primefaces-extensions/primefaces-integration-tests/workflows/Java%20CI/badge.svg)](https://github.com/primefaces-extensions/primefaces-integration-tests/actions)
 [![Stackoverflow](https://img.shields.io/badge/StackOverflow-primefaces-chocolate.svg)](https://stackoverflow.com/questions/tagged/primefaces-extensions)
 
 PrimeFaces Integration Tests
