@@ -24,19 +24,19 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: checkout PrimeFaces
+      - name: Checkout PrimeFaces
         uses: actions/checkout@master
         with:
           repository: primefaces/primefaces
           path: primefaces
-      - name: build PrimeFaces
+      - name: Build PrimeFaces
         run: cd primefaces && mvn install && cd ..
       - name: checkout PrimeFaces Selenium
         uses: actions/checkout@master
         with:
           repository: primefaces-extensions/primefaces-selenium
           path: primefaces-selenium
-      - name: build PrimeFaces Selenium
+      - name: Build PrimeFaces Selenium
         run: cd primefaces-selenium && mvn install && cd ..
       - name: Build with Maven
         run: mvn -B -V clean install -P${{ matrix.profile }}
