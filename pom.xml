@@ -26,7 +26,7 @@
         <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
         <lombok.version>1.18.12</lombok.version>
         <myfaces.version>2.3.6</myfaces.version>
-        <junit.version>5.5.2</junit.version>
+        <junit.version>5.7.0</junit.version>
         <tomee.version>8.0.4</tomee.version>
         <!-- plugin versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
