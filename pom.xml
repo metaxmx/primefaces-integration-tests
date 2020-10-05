@@ -15,8 +15,6 @@
 
     <properties>
         <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEFirefoxAdapterImpl</primefaces-selenium.adapter>
-        <webdriver.chromeDriverBinary>chromedriver</webdriver.chromeDriverBinary>
-        <webdriver.firefoxDriverBinary>geckodriver</webdriver.firefoxDriverBinary>
         <webdriver.headless>false</webdriver.headless>
         <!-- build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -152,13 +150,11 @@
                         <include>**/*Test</include>
                     </includes>
                     <systemPropertyVariables>
-                        <webdriver.chrome.driver>${webdriver.chromeDriverBinary}</webdriver.chrome.driver>
-                        <webdriver.gecko.driver>${webdriver.firefoxDriverBinary}</webdriver.gecko.driver>
                         <webdriver.headless>${webdriver.headless}</webdriver.headless>
                         <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
                         <junit.jupiter.execution.parallel.mode.default>same_thread</junit.jupiter.execution.parallel.mode.default>
                         <junit.jupiter.execution.parallel.mode.classes.default>concurrent</junit.jupiter.execution.parallel.mode.classes.default>
-                        <junit.jupiter.execution.parallel.config.dynamic.factor>0.5</junit.jupiter.execution.parallel.config.dynamic.factor>
+                        <junit.jupiter.execution.parallel.config.dynamic.factor>1</junit.jupiter.execution.parallel.config.dynamic.factor>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -186,19 +182,6 @@
             <id>chrome</id>
             <properties>
                 <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEChromeAdapterImpl</primefaces-selenium.adapter>
-            </properties>
-        </profile>
-        <!-- Detect windows and set properties accordingly -->
-        <profile>
-            <id>windows-webdriver-binary</id>
-            <activation>
-                <os>
-                    <family>windows</family>
-                </os>
-            </activation>
-            <properties>
-                <webdriver.chromeDriverBinary>chromedriver.exe</webdriver.chromeDriverBinary>
-                <webdriver.firefoxDriverBinary>geckodriver.exe</webdriver.firefoxDriverBinary>
             </properties>
         </profile>
     </profiles>

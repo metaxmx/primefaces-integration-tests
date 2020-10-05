@@ -6,10 +6,11 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Java ${{ matrix.java }}
+    name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
         matrix:
             java: [8, 11]
+            profile: ['headless-mode', 'headless-mode,chrome']
 
     steps:
       - uses: actions/checkout@v2
@@ -38,4 +39,4 @@ jobs:
       - name: build PrimeFaces Selenium
         run: cd primefaces-selenium && mvn install && cd ..
       - name: Build with Maven
-        run: mvn -B -V clean install -Pheadless-mode
+        run: mvn -B -V clean install -P${{ matrix.profile }}
