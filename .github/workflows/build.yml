@@ -1,7 +1,11 @@
 name: Java CI
 
 #on: [push, pull_request]
-on: push
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 23 * * *'
 
 jobs:
   build:
@@ -31,7 +35,7 @@ jobs:
           path: primefaces
       - name: Build PrimeFaces
         run: cd primefaces && mvn install && cd ..
-      - name: checkout PrimeFaces Selenium
+      - name: Checkout PrimeFaces Selenium
         uses: actions/checkout@master
         with:
           repository: primefaces-extensions/primefaces-selenium
