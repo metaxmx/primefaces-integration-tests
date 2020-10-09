@@ -24,7 +24,7 @@
         <primefaces.version>9.0-SNAPSHOT</primefaces.version>
         <primefaces-selenium.version>9.0-SNAPSHOT</primefaces-selenium.version>
         <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
-        <lombok.version>1.18.12</lombok.version>
+        <lombok.version>1.18.14</lombok.version>
         <myfaces.version>2.3.6</myfaces.version>
         <junit.version>5.7.0</junit.version>
         <tomee.version>8.0.4</tomee.version>
