@@ -18,39 +18,41 @@ package org.primefaces.extensions.integrationtests.selectonemenu;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.SelectOneMenu;
 
-public class SelectOneMenu001Test extends AbstractPrimePageTest {
+import java.util.List;
+
+public class SelectOneMenu005Test extends AbstractPrimePageTest {
 
     @Test
-    @DisplayName("SelectOneMenu: basic usecase")
-    public void testBasic(Page page) {
+    @Order(1)
+    @DisplayName("SelectOneMenu: hideNoSelectionOption")
+    public void testHideNoSelectionOption(Page page) {
         // Arrange
         SelectOneMenu selectOneMenu = page.selectOneMenu;
-        Assertions.assertEquals("Lewis", selectOneMenu.getSelectedLabel());
+        selectOneMenu.toggleDropdown();
+
+        // Assert
+        List<WebElement> options = selectOneMenu.getItems().findElements(By.className("ui-selectonemenu-item"));
+        Assertions.assertEquals(5, options.size());
 
         // Act
-        selectOneMenu.select("Max");
-        page.button.click();
+        selectOneMenu.select("PS4");
+        selectOneMenu.toggleDropdown();
 
-        // Assert - part 1
-        Assertions.assertEquals("Max", selectOneMenu.getSelectedLabel());
-        assertConfiguration(selectOneMenu.getWidgetConfiguration());
+        // Assert
+        options = selectOneMenu.getItems().findElements(By.className("ui-selectonemenu-item"));
+        Assertions.assertEquals(4, options.size());
 
-        // Act
-        selectOneMenu.select(3);
-        page.button.click();
-
-        // Assert - part 2
-        Assertions.assertEquals("Charles", selectOneMenu.getSelectedLabel());
         assertConfiguration(selectOneMenu.getWidgetConfiguration());
     }
 
@@ -69,7 +71,7 @@ public class SelectOneMenu001Test extends AbstractPrimePageTest {
 
         @Override
         public String getLocation() {
-            return "selectonemenu/selectOneMenu001.xhtml";
+            return "selectonemenu/selectOneMenu005.xhtml";
         }
     }
 }
