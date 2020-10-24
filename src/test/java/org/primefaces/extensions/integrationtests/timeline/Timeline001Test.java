@@ -53,7 +53,7 @@ public class Timeline001Test extends AbstractPrimePageTest {
         // Arrange
 
         // Act
-        page.timeline.findElement(By.className("vis-item-content")).click();
+        PrimeSelenium.guardAjax(page.timeline.findElement(By.className("vis-item-content"))).click();
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
 
         // Assert
