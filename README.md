@@ -20,6 +20,7 @@ from the following locations:
 ## Build & Run
 - Build by source: `mvn clean package`
 - Run "integration tests" with the _verify_ phase: `mvn verify`
+- Run a single test with `mvn verify -Dit.test=org.primefaces.extensions.integrationtests.datepicker.DatePicker001Test`
 
 ### Firefox (default)
 
