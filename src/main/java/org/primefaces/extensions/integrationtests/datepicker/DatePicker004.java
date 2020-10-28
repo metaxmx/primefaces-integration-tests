@@ -15,26 +15,29 @@
  */
 package org.primefaces.extensions.integrationtests.datepicker;
 
-import lombok.Data;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import lombok.Data;
 
 @Named
 @ViewScoped
 @Data
 public class DatePicker004 implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTimeSeconds;
+
+    private LocalDateTime localDateTimeHours;
 
     @PostConstruct
     public void init() {
-        localDateTime = LocalDateTime.of(2020, 8, 20, 22, 20);
+        localDateTimeSeconds = LocalDateTime.of(2020, 8, 20, 22, 20, 19);
+        localDateTimeHours = LocalDateTime.of(2020, 10, 31, 13, 13, 13);
     }
 }
