@@ -15,6 +15,9 @@
  */
 package org.primefaces.extensions.integrationtests.datepicker;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -26,16 +29,11 @@ import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class DatePicker004Test extends AbstractPrimePageTest {
 
     @Test
-    @DisplayName("DatePicker: date with time")
+    @DisplayName("DatePicker: date with time. See GitHub #6458 and #6459")
     public void testDateAndTime(Page page) {
         // Arrange
         DatePicker datePicker = page.datePicker;
@@ -56,12 +54,15 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
         Assertions.assertEquals("11", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText());
         Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
+        // #6458 showSeconds="true" automatically detected because of pattern contains 's'
+        Assertions.assertEquals("00", timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText());
 
         // Assert Submit Value
         page.button.click();
         LocalDateTime newValue = datePicker.getValue();
         Assertions.assertEquals(value, newValue);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+        // #6459 showTime="true" automatically detected because of LocalDateTime
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
         assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
     }
 
