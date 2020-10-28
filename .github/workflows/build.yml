@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    if: (github.event_name == 'schedule' && github.repository == 'primefaces-extensions/primefaces-integration-tests') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
