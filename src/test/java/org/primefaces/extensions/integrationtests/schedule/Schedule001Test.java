@@ -21,15 +21,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
-import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.base.AbstractComponent;
+import org.primefaces.extensions.selenium.component.model.Msg;
 
 public class Schedule001Test extends AbstractPrimePageTest {
 
@@ -55,7 +53,7 @@ public class Schedule001Test extends AbstractPrimePageTest {
         PrimeSelenium.guardAjax(page.schedule.findElement(By.className("fc-daygrid-day"))).click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Date selected"));
+        assertMessage(page, "Date selected");
         assertConfiguration(page.schedule.getWidgetConfiguration());
     }
 
@@ -69,8 +67,15 @@ public class Schedule001Test extends AbstractPrimePageTest {
         PrimeSelenium.guardAjax(page.schedule.findElement(By.className("fc-daygrid-event"))).click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Event selected"));
+        assertMessage(page, "Event selected");
         assertConfiguration(page.schedule.getWidgetConfiguration());
+    }
+
+    private void assertMessage(Page page, String message) {
+        Msg msg = page.messages.getMessage(0);
+        Assertions.assertNotNull(msg, "No messages found!");
+        System.out.println("Message = " + msg);
+        Assertions.assertTrue(msg.getSummary().contains(message));
     }
 
     private void assertConfiguration(JSONObject cfg) {
@@ -82,9 +87,6 @@ public class Schedule001Test extends AbstractPrimePageTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:msgs")
         Messages messages;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
 
         @FindBy(id = "form:schedule")
         AbstractComponent schedule;
