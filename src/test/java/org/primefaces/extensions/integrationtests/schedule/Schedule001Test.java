@@ -50,7 +50,7 @@ public class Schedule001Test extends AbstractPrimePageTest {
         // Arrange
 
         // Act
-        PrimeSelenium.guardAjax(page.schedule.findElement(By.className("fc-daygrid-day"))).click();
+        PrimeSelenium.guardAjax(page.schedule.findElement(By.className("fc-daygrid-day-top"))).click();
 
         // Assert
         assertMessage(page, "Date selected");
