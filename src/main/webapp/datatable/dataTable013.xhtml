@@ -12,7 +12,7 @@
     <h:body>
 
         <h:form id="form">
-            <p:dataTable id="datatable" value="#{dataTable013.progLanguages}" var="lang" sortMode="multiple" sortMeta="#{dataTable013.initialSortMeta}">
+            <p:dataTable id="datatable" value="#{dataTable013.progLanguages}" var="lang" sortBy="#{dataTable013.sortBy}">
                 <f:facet name="header">
                     multiple sort; sortBy on p:column; initial sort via sortMeta on dataTable
                 </f:facet>

@@ -13,8 +13,8 @@ public class ProgrammingLanguageLazySorter implements Comparator<ProgrammingLang
     private final SortOrder sortOrder;
 
     public ProgrammingLanguageLazySorter(SortMeta sortMeta) {
-        sortField = sortMeta.getSortField();
-        sortOrder = sortMeta.getSortOrder();
+        sortField = sortMeta.getField();
+        sortOrder = sortMeta.getOrder();
     }
 
     public ProgrammingLanguageLazySorter(String sortField, SortOrder sortOrder) {

@@ -14,6 +14,8 @@ package org.primefaces.extensions.integrationtests.datatable;
 
 import lombok.Data;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -33,6 +35,8 @@ public class DataTable012 implements Serializable {
     private List<ProgrammingLanguage> progLanguages1;
     private List<ProgrammingLanguage> progLanguages2;
 
+    private SortMeta sortBy;
+
     @Inject
     private ProgrammingLanguageService service;
 
@@ -40,6 +44,8 @@ public class DataTable012 implements Serializable {
     public void init() {
         progLanguages1 = service.getLangs();
         progLanguages2 = service.getLangs();
+
+        sortBy = SortMeta.builder().field("name").order(SortOrder.ASCENDING).build();
     }
 
     public void resetTable1() {
@@ -55,4 +61,5 @@ public class DataTable012 implements Serializable {
 
         progLanguages2 = service.getLangs(); //progLanguages may have been sorted from DataTable
     }
+
 }

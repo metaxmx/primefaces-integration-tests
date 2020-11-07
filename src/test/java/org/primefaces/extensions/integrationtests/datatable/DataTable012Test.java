@@ -68,7 +68,6 @@ public class DataTable012Test extends AbstractDataTableTest {
 
     @Test
     @Order(2)
-    @Disabled("p:column field=\"xx\" does not seem to work for sorting for PF 9-SNAPSHOT as of september 2020 (at least for single sort)")
     @DisplayName("DataTable: single sort; field on p:column; initial sort via sortBy on dataTable")
     public void testFieldWithDefault(Page page) {
 

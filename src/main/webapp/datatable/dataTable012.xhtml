@@ -12,7 +12,7 @@
     <h:body>
 
         <h:form id="form1">
-            <p:dataTable id="datatable1" value="#{dataTable012.progLanguages1}" var="lang" sortBy="#{lang.name}">
+            <p:dataTable id="datatable1" value="#{dataTable012.progLanguages1}" var="lang" sortBy="#{dataTable012.sortBy}">
                 <f:facet name="header">
                     Single sort; sortBy on p:column; initial sort via sortBy on dataTable
                 </f:facet>
@@ -35,7 +35,7 @@
         </h:form>
 
         <h:form id="form2">
-            <p:dataTable id="datatable2" value="#{dataTable012.progLanguages2}" var="lang" sortBy="#{lang.name}">
+            <p:dataTable id="datatable2" value="#{dataTable012.progLanguages2}" var="lang" sortBy="#{dataTable012.sortBy}">
                 <f:facet name="header">
                     Single sort; field on p:column; initial sort via sortBy on dataTable
                 </f:facet>

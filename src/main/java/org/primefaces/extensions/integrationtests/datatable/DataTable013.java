@@ -34,12 +34,18 @@ public class DataTable013 implements Serializable {
 
     private List<ProgrammingLanguage> progLanguages;
 
+    private List<SortMeta> sortBy;
+
     @Inject
     private ProgrammingLanguageService service;
 
     @PostConstruct
     public void init() {
         progLanguages = service.getLangs();
+
+        sortBy = new ArrayList<>();
+        sortBy.add(SortMeta.builder().field("firstAppeared").order(SortOrder.DESCENDING).priority(1).build());
+        sortBy.add(SortMeta.builder().field("name").order(SortOrder.ASCENDING).priority(2).build());
     }
 
     public void resetTable() {
@@ -47,15 +53,6 @@ public class DataTable013 implements Serializable {
         dataTable.reset();
 
         progLanguages = service.getLangs(); //progLanguages may have been sorted from DataTable
-    }
-
-    public Map<String, SortMeta> getInitialSortMeta() {
-        Map<String, SortMeta> sortMeta = new LinkedHashMap<>();
-
-        sortMeta.put("firstAppeared", new SortMeta("form:datatable:firstAppeared", "firstAppeared", SortOrder.DESCENDING, null));
-        sortMeta.put("name", new SortMeta("form:datatable:name", "name", SortOrder.ASCENDING, null));
-
-        return sortMeta;
     }
 
 }

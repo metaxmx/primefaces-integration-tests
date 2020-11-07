@@ -149,7 +149,6 @@ public class DataTable001Test extends AbstractDataTableTest {
 
     @Test
     @Order(4)
-    @Disabled("Disabled until GitHub issues #5465 and #5481 are fixed")
     @DisplayName("DataTable: rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465 & https://github.com/primefaces/primefaces/issues/5481")
     public void testRowsPerPageAndReset_5465_5481(Page page) {
         // Arrange
