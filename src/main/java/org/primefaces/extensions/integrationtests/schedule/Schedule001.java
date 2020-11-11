@@ -12,7 +12,15 @@
  */
 package org.primefaces.extensions.integrationtests.schedule;
 
-import lombok.Data;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
@@ -21,13 +29,7 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.Data;
 
 @Named
 @ViewScoped
@@ -37,52 +39,53 @@ public class Schedule001 implements Serializable {
     private static final long serialVersionUID = 2014707183985306105L;
 
     private ScheduleModel eventModel;
+    private String locale = "en";
 
     @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
 
         DefaultScheduleEvent event = DefaultScheduleEvent.builder()
-                .title("Champions League Match")
-                .startDate(previousDay8Pm())
-                .endDate(previousDay11Pm())
-                .description("Team A vs. Team B")
-                .build();
+                    .title("Champions League Match")
+                    .startDate(previousDay8Pm())
+                    .endDate(previousDay11Pm())
+                    .description("Team A vs. Team B")
+                    .build();
         eventModel.addEvent(event);
 
         event = DefaultScheduleEvent.builder()
-                .title("Birthday Party")
-                .startDate(today1Pm())
-                .endDate(today6Pm())
-                .description("Aragon")
-                .overlapAllowed(true)
-                .build();
+                    .title("Birthday Party")
+                    .startDate(today1Pm())
+                    .endDate(today6Pm())
+                    .description("Aragon")
+                    .overlapAllowed(true)
+                    .build();
         eventModel.addEvent(event);
 
         event = DefaultScheduleEvent.builder()
-                .title("Breakfast at Tiffanys")
-                .startDate(nextDay9Am())
-                .endDate(nextDay11Am())
-                .description("all you can eat")
-                .overlapAllowed(true)
-                .build();
+                    .title("Breakfast at Tiffanys")
+                    .startDate(nextDay9Am())
+                    .endDate(nextDay11Am())
+                    .description("all you can eat")
+                    .overlapAllowed(true)
+                    .build();
         eventModel.addEvent(event);
 
         event = DefaultScheduleEvent.builder()
-                .title("Plant the new garden stuff")
-                .startDate(theDayAfter3Pm())
-                .endDate(fourDaysLater3pm())
-                .description("Trees, flowers, ...")
-                .build();
+                    .title("Plant the new garden stuff")
+                    .startDate(theDayAfter3Pm())
+                    .endDate(fourDaysLater3pm())
+                    .description("Trees, flowers, ...")
+                    .build();
         eventModel.addEvent(event);
 
-        DefaultScheduleEvent scheduleEventAllDay=DefaultScheduleEvent.builder()
-                .title("Holidays (AllDay)")
-                .startDate(sevenDaysLater0am())
-                .endDate(eightDaysLater0am())
-                .description("sleep as long as you want")
-                .allDay(true)
-                .build();
+        DefaultScheduleEvent scheduleEventAllDay = DefaultScheduleEvent.builder()
+                    .title("Holidays (AllDay)")
+                    .startDate(sevenDaysLater0am())
+                    .endDate(eightDaysLater0am())
+                    .description("sleep as long as you want")
+                    .allDay(true)
+                    .build();
         eventModel.addEvent(scheduleEventAllDay);
     }
 
@@ -127,7 +130,8 @@ public class Schedule001 implements Serializable {
     }
 
     public void onEventSelect(SelectEvent<ScheduleEvent> selectEvent) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event selected", selectEvent.getObject().getGroupId() + ": " + selectEvent.getObject().getTitle());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event selected",
+                    selectEvent.getObject().getGroupId() + ": " + selectEvent.getObject().getTitle());
         addMessage(message);
     }
 
@@ -142,8 +146,17 @@ public class Schedule001 implements Serializable {
     }
 
     public void onEventResize(ScheduleEntryResizeEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Start-Delta:" + event.getDeltaStartAsDuration() + ", End-Delta: " + event.getDeltaEndAsDuration());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized",
+                    "Start-Delta:" + event.getDeltaStartAsDuration() + ", End-Delta: " + event.getDeltaEndAsDuration());
         addMessage(message);
+    }
+
+    public void english() {
+        setLocale("en");
+    }
+
+    public void french() {
+        setLocale("fr");
     }
 
     private void addMessage(FacesMessage message) {

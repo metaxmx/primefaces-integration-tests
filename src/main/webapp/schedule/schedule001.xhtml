@@ -13,19 +13,20 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
-            <p:schedule id="schedule" value="#{schedule001.eventModel}" widgetVar="myschedule" >
+            <p:schedule id="schedule" value="#{schedule001.eventModel}" widgetVar="myschedule" locale="#{schedule001.locale}">
 
-                <p:ajax event="dateSelect" listener="#{schedule001.onDateSelect}" />
-                <p:ajax event="eventSelect" listener="#{schedule001.onEventSelect}" />
-                <p:ajax event="eventMove" listener="#{schedule001.onEventMove}" />
-                <p:ajax event="eventResize" listener="#{schedule001.onEventResize}" />
+                <p:ajax event="dateSelect" listener="#{schedule001.onDateSelect}"/>
+                <p:ajax event="eventSelect" listener="#{schedule001.onEventSelect}"/>
+                <p:ajax event="eventMove" listener="#{schedule001.onEventMove}"/>
+                <p:ajax event="eventResize" listener="#{schedule001.onEventResize}"/>
 
             </p:schedule>
 
-            <p:commandButton id="button" update="@form" value="Submit"/>
+            <p:commandButton id="btnEnglish" update="@form" value="English" actionListener="#{schedule001.english}"/>
+            <p:commandButton id="btnFrench" update="@form" value="French" actionListener="#{schedule001.french}"/>
         </h:form>
 
     </h:body>

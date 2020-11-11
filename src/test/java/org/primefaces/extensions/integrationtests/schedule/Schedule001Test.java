@@ -21,10 +21,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
+import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.base.AbstractComponent;
 import org.primefaces.extensions.selenium.component.model.Msg;
@@ -71,6 +73,32 @@ public class Schedule001Test extends AbstractPrimePageTest {
         assertConfiguration(page.schedule.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("Schedule: GitHub #6496 locale switching")
+    public void testLocales(Page page) {
+        // Arrange
+        assertButton(page, "fc-today-button", "Current Date");
+        assertButton(page, "fc-dayGridMonth-button", "Month");
+        assertButton(page, "fc-timeGridWeek-button", "Week");
+        assertButton(page, "fc-timeGridDay-button", "Day");
+
+        // Act
+        page.buttonFrench.click();
+
+        // Assert
+        assertButton(page, "fc-today-button", "Aujourd'hui");
+        assertButton(page, "fc-dayGridMonth-button", "Mois");
+        assertButton(page, "fc-timeGridWeek-button", "Semaine");
+        assertButton(page, "fc-timeGridDay-button", "Jour");
+        assertConfiguration(page.schedule.getWidgetConfiguration());
+    }
+
+    private void assertButton(Page page, String buttonClass, String text) {
+        WebElement button = page.schedule.findElement(By.className(buttonClass));
+        Assertions.assertEquals(text, button.getText());
+    }
+
     private void assertMessage(Page page, String message) {
         Msg msg = page.messages.getMessage(0);
         Assertions.assertNotNull(msg, "No messages found!");
@@ -90,6 +118,12 @@ public class Schedule001Test extends AbstractPrimePageTest {
 
         @FindBy(id = "form:schedule")
         AbstractComponent schedule;
+
+        @FindBy(id = "form:btnEnglish")
+        CommandButton buttonEnglish;
+
+        @FindBy(id = "form:btnFrench")
+        CommandButton buttonFrench;
 
         @Override
         public String getLocation() {
