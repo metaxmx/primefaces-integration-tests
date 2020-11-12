@@ -27,6 +27,7 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
+import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.SelectOneMenu;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class SelectOneMenu004Test extends AbstractPrimePageTest {
 
     @Test
     @Order(1)
-    @DisplayName("SelectOneMenu: dynamic")
-    public void testDisabled(Page page) {
+    @DisplayName("SelectOneMenu: dynamic - load items on demand")
+    public void testDynamic(Page page) {
         // Arrange
         SelectOneMenu selectOneMenu = page.selectOneMenu;
 
@@ -61,6 +62,23 @@ public class SelectOneMenu004Test extends AbstractPrimePageTest {
         assertConfiguration(selectOneMenu.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("SelectOneMenu: dynamic - don´t loose selection on submit")
+    public void testDynamic2(Page page) {
+        // Arrange
+        SelectOneMenu selectOneMenu = page.selectOneMenu2;
+
+        // Act
+        page.button.click();
+
+        // Assert
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("console2"));
+        Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains("PS4"));
+
+        assertConfiguration(selectOneMenu.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("SelectOneMenu Config = " + cfg);
@@ -68,8 +86,14 @@ public class SelectOneMenu004Test extends AbstractPrimePageTest {
     }
 
     public static class Page extends AbstractPrimePage {
+        @FindBy(id = "form:msgs")
+        Messages messages;
+
         @FindBy(id = "form:selectonemenu")
         SelectOneMenu selectOneMenu;
+
+        @FindBy(id = "form:selectonemenu2")
+        SelectOneMenu selectOneMenu2;
 
         @FindBy(id = "form:button")
         CommandButton button;

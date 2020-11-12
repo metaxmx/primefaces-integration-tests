@@ -15,6 +15,8 @@ package org.primefaces.extensions.integrationtests.selectonemenu;
 import lombok.Data;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -27,10 +29,16 @@ public class SelectOneMenu004 implements Serializable {
     private static final long serialVersionUID = 354383342266918349L;
 
     private String console = "";
+    private String console2 = "PS4";
 
     @PostConstruct
     public void init() {
 
+    }
+
+    public void submit() {
+        FacesMessage msg = new FacesMessage("console2", console2);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
 }
