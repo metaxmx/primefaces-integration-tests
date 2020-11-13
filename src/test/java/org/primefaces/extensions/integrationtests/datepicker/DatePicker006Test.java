@@ -34,7 +34,7 @@ public class DatePicker006Test extends AbstractPrimePageTest {
     @Test
     @Order(1)
     @DisplayName("DatePicker: GitHub #6506 using java.sql.Date")
-    public void testPreselectedRange(Page page) {
+    public void testSqlDateMinMax(Page page) {
         // Arrange
         DatePicker datePicker = page.datePicker;
         Assertions.assertEquals(null, datePicker.getValue());
