@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputNumber;
 
@@ -58,6 +59,23 @@ public class InputNumber001Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertEquals("99", inputNumber.getValue());
+        assertConfiguration(inputNumber.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("InputNumber: Test widget getValue() function returns Integer values with the correct format")
+    public void testIntegerWidgetValue(Page page) {
+        // Arrange
+        InputNumber inputNumber = page.inputnumber;
+        Assertions.assertEquals("50", inputNumber.getValue());
+
+        // Act
+        inputNumber.setValue("33");
+        String valueStr = PrimeSelenium.executeScript("return " + inputNumber.getWidgetByIdScript() + ".getValue();");
+
+        // Assert
+        Assertions.assertEquals("33", valueStr);
         assertConfiguration(inputNumber.getWidgetConfiguration());
     }
 
