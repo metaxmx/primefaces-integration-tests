@@ -61,6 +61,22 @@ public class InputNumber001Test extends AbstractPrimePageTest {
         assertConfiguration(inputNumber.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(3)
+    @DisplayName("InputNumber: Test widget getValue() function returns Integer values with the correct format")
+    public void testIntegerWidgetValue(Page page) {
+        // Arrange
+        InputNumber inputNumber = page.inputnumber;
+        Assertions.assertEquals("50", inputNumber.getValue());
+
+        // Act
+        inputNumber.setValue("42");
+
+        // Assert
+        Assertions.assertEquals("42", inputNumber.getWidgetValue());
+        assertConfiguration(inputNumber.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("InputNumber Config = " + cfg);
